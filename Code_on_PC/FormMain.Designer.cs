@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.btnSendData = new System.Windows.Forms.Button();
-            this.btnReceiveData = new System.Windows.Forms.Button();
+            this.btnClearData = new System.Windows.Forms.Button();
             this.tbDataInput = new System.Windows.Forms.TextBox();
             this.lbDataInput = new System.Windows.Forms.Label();
             this.tbDataReceive = new System.Windows.Forms.TextBox();
@@ -41,6 +41,7 @@
             this.btnPicture = new System.Windows.Forms.Button();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
             this.lbBautRate = new System.Windows.Forms.Label();
+            this.btnScan = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serialPort
@@ -59,14 +60,15 @@
             this.btnSendData.UseVisualStyleBackColor = true;
             this.btnSendData.Click += new System.EventHandler(this.BtnSendData_Click);
             // 
-            // btnReceiveData
+            // btnClearData
             // 
-            this.btnReceiveData.Location = new System.Drawing.Point(509, 225);
-            this.btnReceiveData.Name = "btnReceiveData";
-            this.btnReceiveData.Size = new System.Drawing.Size(75, 23);
-            this.btnReceiveData.TabIndex = 6;
-            this.btnReceiveData.Text = "接收数据";
-            this.btnReceiveData.UseVisualStyleBackColor = true;
+            this.btnClearData.Location = new System.Drawing.Point(509, 225);
+            this.btnClearData.Name = "btnClearData";
+            this.btnClearData.Size = new System.Drawing.Size(75, 23);
+            this.btnClearData.TabIndex = 6;
+            this.btnClearData.Text = "清除数据";
+            this.btnClearData.UseVisualStyleBackColor = true;
+            this.btnClearData.Click += new System.EventHandler(this.BtnClearData_Click);
             // 
             // tbDataInput
             // 
@@ -121,10 +123,11 @@
             "COM1",
             "COM2",
             "COM3"});
-            this.cbSerialPort.Location = new System.Drawing.Point(20, 35);
+            this.cbSerialPort.Location = new System.Drawing.Point(20, 39);
             this.cbSerialPort.Name = "cbSerialPort";
-            this.cbSerialPort.Size = new System.Drawing.Size(265, 20);
+            this.cbSerialPort.Size = new System.Drawing.Size(174, 20);
             this.cbSerialPort.TabIndex = 0;
+            this.cbSerialPort.SelectedValueChanged += new System.EventHandler(this.CbSerialPort_SelectedValueChanged);
             // 
             // btnPicture
             // 
@@ -153,10 +156,11 @@
             "19200",
             "9600",
             "4800"});
-            this.cbBaudRate.Location = new System.Drawing.Point(319, 35);
+            this.cbBaudRate.Location = new System.Drawing.Point(319, 39);
             this.cbBaudRate.Name = "cbBaudRate";
             this.cbBaudRate.Size = new System.Drawing.Size(174, 20);
             this.cbBaudRate.TabIndex = 9;
+            this.cbBaudRate.SelectedIndexChanged += new System.EventHandler(this.CbBaudRate_SelectedIndexChanged);
             // 
             // lbBautRate
             // 
@@ -167,11 +171,22 @@
             this.lbBautRate.TabIndex = 10;
             this.lbBautRate.Text = "选择波特率：";
             // 
+            // btnScan
+            // 
+            this.btnScan.Location = new System.Drawing.Point(210, 37);
+            this.btnScan.Name = "btnScan";
+            this.btnScan.Size = new System.Drawing.Size(75, 23);
+            this.btnScan.TabIndex = 11;
+            this.btnScan.Text = "扫描串口";
+            this.btnScan.UseVisualStyleBackColor = true;
+            this.btnScan.Click += new System.EventHandler(this.BtnScan_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(606, 262);
+            this.Controls.Add(this.btnScan);
             this.Controls.Add(this.lbDataInput);
             this.Controls.Add(this.lbBautRate);
             this.Controls.Add(this.cbBaudRate);
@@ -180,13 +195,14 @@
             this.Controls.Add(this.lbSerialPort);
             this.Controls.Add(this.tbDataReceive);
             this.Controls.Add(this.tbDataInput);
-            this.Controls.Add(this.btnReceiveData);
+            this.Controls.Add(this.btnClearData);
             this.Controls.Add(this.btnSendData);
             this.Controls.Add(this.lbDataReceive);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LED点阵屏显示控制系统";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -196,7 +212,7 @@
         #endregion
         private System.IO.Ports.SerialPort serialPort;
         private System.Windows.Forms.Button btnSendData;
-        private System.Windows.Forms.Button btnReceiveData;
+        private System.Windows.Forms.Button btnClearData;
         private System.Windows.Forms.TextBox tbDataInput;
         private System.Windows.Forms.Label lbDataInput;
         private System.Windows.Forms.TextBox tbDataReceive;
@@ -206,6 +222,7 @@
         private System.Windows.Forms.Button btnPicture;
         private System.Windows.Forms.ComboBox cbBaudRate;
         private System.Windows.Forms.Label lbBautRate;
+        private System.Windows.Forms.Button btnScan;
     }
 }
 
