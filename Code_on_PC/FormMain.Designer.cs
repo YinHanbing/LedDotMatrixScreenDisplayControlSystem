@@ -39,6 +39,8 @@
             this.lbSerialPort = new System.Windows.Forms.Label();
             this.cbSerialPort = new System.Windows.Forms.ComboBox();
             this.btnPicture = new System.Windows.Forms.Button();
+            this.cbBaudRate = new System.Windows.Forms.ComboBox();
+            this.lbBautRate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // serialPort
@@ -77,9 +79,10 @@
             // 
             // lbDataInput
             // 
-            this.lbDataInput.Location = new System.Drawing.Point(18, 69);
+            this.lbDataInput.AutoSize = true;
+            this.lbDataInput.Location = new System.Drawing.Point(18, 80);
             this.lbDataInput.Name = "lbDataInput";
-            this.lbDataInput.Size = new System.Drawing.Size(94, 23);
+            this.lbDataInput.Size = new System.Drawing.Size(77, 12);
             this.lbDataInput.TabIndex = 4;
             this.lbDataInput.Text = "请输入数据：";
             // 
@@ -93,17 +96,19 @@
             // 
             // lbDataReceive
             // 
-            this.lbDataReceive.Location = new System.Drawing.Point(317, 69);
+            this.lbDataReceive.AutoSize = true;
+            this.lbDataReceive.Location = new System.Drawing.Point(317, 80);
             this.lbDataReceive.Name = "lbDataReceive";
-            this.lbDataReceive.Size = new System.Drawing.Size(100, 23);
+            this.lbDataReceive.Size = new System.Drawing.Size(89, 12);
             this.lbDataReceive.TabIndex = 2;
             this.lbDataReceive.Text = "当前显示内容：";
             // 
             // lbSerialPort
             // 
-            this.lbSerialPort.Location = new System.Drawing.Point(18, 9);
+            this.lbSerialPort.AutoSize = true;
+            this.lbSerialPort.Location = new System.Drawing.Point(18, 20);
             this.lbSerialPort.Name = "lbSerialPort";
-            this.lbSerialPort.Size = new System.Drawing.Size(100, 23);
+            this.lbSerialPort.Size = new System.Drawing.Size(65, 12);
             this.lbSerialPort.TabIndex = 1;
             this.lbSerialPort.Text = "选择串口：";
             // 
@@ -113,9 +118,9 @@
             this.cbSerialPort.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbSerialPort.FormattingEnabled = true;
             this.cbSerialPort.Items.AddRange(new object[] {
-            "com1",
-            "com2",
-            "com3"});
+            "COM1",
+            "COM2",
+            "COM3"});
             this.cbSerialPort.Location = new System.Drawing.Point(20, 35);
             this.cbSerialPort.Name = "cbSerialPort";
             this.cbSerialPort.Size = new System.Drawing.Size(265, 20);
@@ -129,23 +134,58 @@
             this.btnPicture.TabIndex = 8;
             this.btnPicture.Text = "图形模式";
             this.btnPicture.UseVisualStyleBackColor = true;
+            this.btnPicture.Click += new System.EventHandler(this.BtnPicture_Click);
+            // 
+            // cbBaudRate
+            // 
+            this.cbBaudRate.FormattingEnabled = true;
+            this.cbBaudRate.Items.AddRange(new object[] {
+            "864000",
+            "691200",
+            "576000",
+            "460800",
+            "256000",
+            "128000",
+            "115200",
+            "56700",
+            "38400",
+            "28800",
+            "19200",
+            "9600",
+            "4800"});
+            this.cbBaudRate.Location = new System.Drawing.Point(319, 35);
+            this.cbBaudRate.Name = "cbBaudRate";
+            this.cbBaudRate.Size = new System.Drawing.Size(174, 20);
+            this.cbBaudRate.TabIndex = 9;
+            // 
+            // lbBautRate
+            // 
+            this.lbBautRate.AutoSize = true;
+            this.lbBautRate.Location = new System.Drawing.Point(317, 20);
+            this.lbBautRate.Name = "lbBautRate";
+            this.lbBautRate.Size = new System.Drawing.Size(77, 12);
+            this.lbBautRate.TabIndex = 10;
+            this.lbBautRate.Text = "选择波特率：";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(606, 262);
+            this.Controls.Add(this.lbDataInput);
+            this.Controls.Add(this.lbBautRate);
+            this.Controls.Add(this.cbBaudRate);
             this.Controls.Add(this.btnPicture);
             this.Controls.Add(this.cbSerialPort);
             this.Controls.Add(this.lbSerialPort);
-            this.Controls.Add(this.lbDataReceive);
             this.Controls.Add(this.tbDataReceive);
-            this.Controls.Add(this.lbDataInput);
             this.Controls.Add(this.tbDataInput);
             this.Controls.Add(this.btnReceiveData);
             this.Controls.Add(this.btnSendData);
+            this.Controls.Add(this.lbDataReceive);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LED点阵屏显示控制系统";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.ResumeLayout(false);
@@ -164,6 +204,8 @@
         private System.Windows.Forms.Label lbSerialPort;
         private System.Windows.Forms.ComboBox cbSerialPort;
         private System.Windows.Forms.Button btnPicture;
+        private System.Windows.Forms.ComboBox cbBaudRate;
+        private System.Windows.Forms.Label lbBautRate;
     }
 }
 

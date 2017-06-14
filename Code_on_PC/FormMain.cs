@@ -4,15 +4,20 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
     public partial class FormMain : Form
     {
+        private SerialCommunications serialCommunications;
+
         public FormMain()
         {
             InitializeComponent();
+            cbBaudRate.SelectedIndex = 11;
+            serialCommunications = new SerialCommunications(serialPort, cbSerialPort, cbBaudRate);
+            serialCommunications.InitSerial();
         }
 
 
         private void CbSerialPort_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-
+            serialPort.Open();
         }
 
         private void FormMain_Load(object sender, System.EventArgs e)
@@ -45,5 +50,11 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         }
 
+        private void BtnPicture_Click(object sender, System.EventArgs e)
+        {
+            FormPicture fp = new FormPicture(this);
+            this.Enabled = false;
+            fp.Show();
+        }
     }
 }
