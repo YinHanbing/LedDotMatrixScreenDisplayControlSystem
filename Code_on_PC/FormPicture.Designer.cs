@@ -1,4 +1,4 @@
-﻿namespace LedDotMatrixScreenDisplaySystem
+﻿namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
     partial class FormPicture
     {
@@ -47,7 +47,9 @@
             this.ClientSize = new System.Drawing.Size(544, 356);
             this.Controls.Add(this.picDraw);
             this.Name = "FormPicture";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "图形模式";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormPicture_FormClosed);
             this.Load += new System.EventHandler(this.FormPicture_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picDraw)).EndInit();
             this.ResumeLayout(false);
