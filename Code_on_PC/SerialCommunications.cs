@@ -37,7 +37,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         public void ScanSerial()
         {
-
             cbSerial.Items.Clear();
             // 检查是否含有串口  
             string[] str = SerialPort.GetPortNames();
@@ -59,7 +58,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         public void OpenSerial()
         {
-            if (!serialPort.IsOpen)
+            if (!serialPort.IsOpen && SerialPort.GetPortNames().Length != 0)
             {
                 serialPort.PortName = cbSerial.SelectedItem.ToString();//串口名  
                 System.Console.WriteLine(cbBautRate.SelectedItem);

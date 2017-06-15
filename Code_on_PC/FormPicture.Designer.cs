@@ -34,9 +34,10 @@
             // 
             // picDraw
             // 
-            this.picDraw.Location = new System.Drawing.Point(179, 134);
+            this.picDraw.Location = new System.Drawing.Point(200, 12);
             this.picDraw.Name = "picDraw";
-            this.picDraw.Size = new System.Drawing.Size(100, 50);
+            this.picDraw.Size = new System.Drawing.Size(332, 332);
+            this.picDraw.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picDraw.TabIndex = 0;
             this.picDraw.TabStop = false;
             // 
@@ -46,6 +47,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(544, 356);
             this.Controls.Add(this.picDraw);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FormPicture";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "图形模式";
@@ -53,6 +56,7 @@
             this.Load += new System.EventHandler(this.FormPicture_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picDraw)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

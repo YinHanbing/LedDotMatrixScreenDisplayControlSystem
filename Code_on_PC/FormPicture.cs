@@ -16,9 +16,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void FormPicture_Load(object sender, EventArgs e)
         {
-            Bitmap bmp = new Bitmap(16, 16);
+            Bitmap bmp = new Bitmap(picDraw.Width, picDraw.Height);
             Graphics g = Graphics.FromImage(bmp);
-            g.FillRectangle(Brushes.White, new Rectangle() { X = 0, Y = 0, Height = 16, Width = 16 });
+            g.DrawRectangle(new Pen(Brushes.Black), new Rectangle() { X = 0, Y = 0, Height = picDraw.Height, Width = picDraw.Width });
             picDraw.Image = bmp;
         }
 
