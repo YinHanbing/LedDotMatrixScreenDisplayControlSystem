@@ -90,9 +90,11 @@
             // 
             // tbDataReceive
             // 
+            this.tbDataReceive.BackColor = System.Drawing.SystemColors.Window;
             this.tbDataReceive.Location = new System.Drawing.Point(319, 95);
             this.tbDataReceive.Multiline = true;
             this.tbDataReceive.Name = "tbDataReceive";
+            this.tbDataReceive.ReadOnly = true;
             this.tbDataReceive.Size = new System.Drawing.Size(265, 124);
             this.tbDataReceive.TabIndex = 3;
             // 
@@ -131,7 +133,7 @@
             // 
             // btnPicture
             // 
-            this.btnPicture.Location = new System.Drawing.Point(509, 33);
+            this.btnPicture.Location = new System.Drawing.Point(509, 37);
             this.btnPicture.Name = "btnPicture";
             this.btnPicture.Size = new System.Drawing.Size(75, 23);
             this.btnPicture.TabIndex = 8;
@@ -199,6 +201,7 @@
             this.Controls.Add(this.btnSendData);
             this.Controls.Add(this.lbDataReceive);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LED点阵屏显示控制系统";
