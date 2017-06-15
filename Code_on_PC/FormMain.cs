@@ -6,23 +6,24 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
     {
         private SerialCommunications serialCommunications;
         private delegate void UpdateUI();
+        public static bool isFormMonitorShown;
 
         public FormMain()
         {
             InitializeComponent();
-            cbBaudRate.SelectedIndex = 12;
+            cbBaudRate.SelectedIndex = 2;
             serialCommunications = new SerialCommunications(serialPort, cbSerialPort, cbBaudRate);
             serialCommunications.ScanSerial();
+            isFormMonitorShown = false;
         }
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
-
+          
         }
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            tbDataReceive.Invoke(new UpdateUI(() => { tbDataReceive.AppendText(serialCommunications.ReceiveData()); }));
         }
 
         private void SerialPort_ErrorReceived(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)
@@ -33,23 +34,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private void SerialPort_PinChanged(object sender, System.IO.Ports.SerialPinChangedEventArgs e)
         {
 
-        }
-
-        private void BtnSendData_Click(object sender, System.EventArgs e)
-        {
-            serialCommunications.SendData(tbDataInput.Text);
-        }
-
-        private void TbDataInput_TextChanged(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void BtnPicture_Click(object sender, System.EventArgs e)
-        {
-            FormPicture fp = new FormPicture(this);
-            this.Enabled = false;
-            fp.Show();
         }
 
         private void BtnScan_Click(object sender, System.EventArgs e)
@@ -64,12 +48,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void CbSerialPort_SelectedValueChanged(object sender, System.EventArgs e)
         {
-            serialCommunications.OpenSerial();
-        }
-
-        private void BtnClearData_Click(object sender, System.EventArgs e)
-        {
-            tbDataReceive.Clear();
+            if (!serialPort.IsOpen)
+            {
+                serialCommunications.OpenSerial(); 
+            }
         }
 
         private void CbBaudRate_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -78,6 +60,24 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             {
                 serialCommunications.CloseSerial();
                 serialCommunications.OpenSerial(); 
+            }
+        }
+
+        private void BtnSendText_Click(object sender, System.EventArgs e)
+        {
+            if (tbTextInput.Text.Length != 0)
+            {
+                serialCommunications.SendData(tbTextInput.Text);
+            }
+        }
+
+        private void BtnMonitor_Click(object sender, System.EventArgs e)
+        {
+            FormMonitor fm = new FormMonitor(serialPort);
+            if (!isFormMonitorShown)
+            {
+                fm.Show();
+                isFormMonitorShown = true;
             }
         }
     }
