@@ -39,6 +39,7 @@
             this.pbMonitor.Location = new System.Drawing.Point(12, 12);
             this.pbMonitor.Name = "pbMonitor";
             this.pbMonitor.Size = new System.Drawing.Size(256, 256);
+            this.pbMonitor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbMonitor.TabIndex = 0;
             this.pbMonitor.TabStop = false;
             // 
@@ -61,6 +62,7 @@
             this.Text = "监视点阵屏";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMonitor_FormClosed);
+            this.Load += new System.EventHandler(this.FormMonitor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMonitor)).EndInit();
             this.ResumeLayout(false);
 

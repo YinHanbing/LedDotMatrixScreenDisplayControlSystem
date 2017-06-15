@@ -1,5 +1,6 @@
 ﻿using System.IO.Ports;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC
@@ -9,6 +10,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private SerialPort serialPort;
         private ComboBox cbSerial;
         private ComboBox cbBautRate;
+        private Thread Worker;
+
+        private delegate void UpdateUI();
 
         public SerialCommunications(SerialPort serialPort, ComboBox cbSerial, ComboBox cbBautRate)
         {
@@ -22,38 +26,77 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             serialPort.Write(data);
         }
 
-        public string ReceiveData()
+        public byte ReceiveData()
         {
-            string data = "";
+            byte data = 0;
             System.Threading.Thread.Sleep(100);
             byte[] m_recvBytes = new byte[serialPort.BytesToRead];//定义缓冲区大小
             int result = serialPort.Read(m_recvBytes, 0, m_recvBytes.Length);//从串口读取数据
             if (result <= 0)
                 return data;
-            data = Encoding.ASCII.GetString(m_recvBytes, 0, m_recvBytes.Length);//对数据进行转换
             serialPort.DiscardInBuffer();
             return data;
         }
 
         public void ScanSerial()
         {
-            cbSerial.Items.Clear();
-            // 检查是否含有串口  
-            string[] str = SerialPort.GetPortNames();
-            if (str.Length == 0)
+            if (Worker == null)
             {
-                cbSerial.Items.Add("没有可用串口");
-            }
+                Worker = new Thread(() =>
+                    {
+                        while (true)
+                        {
+                            if (cbSerial.IsHandleCreated)
+                            {
+                                int oldPortNamesLength = 0;
+                                while (true)
+                                {
+                                    if (SerialPort.GetPortNames().Length != oldPortNamesLength)
+                                    {
+                                        cbSerial.BeginInvoke(new UpdateUI(() =>
+                                        {
+                                            cbSerial.Items.Clear();
+                                        }));
+                                        // 检查是否含有串口  
+                                        string[] str = SerialPort.GetPortNames();
+                                        if (str.Length == 0)
+                                        {
+                                            cbSerial.BeginInvoke(new UpdateUI(() =>
+                                            {
+                                                cbSerial.Items.Add("没有可用串口");
+                                            }));
+                                        }
 
-            // 添加串口项目  
-            foreach (string s in SerialPort.GetPortNames())
-            {
-                // 获取有多少个COM口  
-                cbSerial.Items.Add(s);
-            }
+                                        // 添加串口项目  
+                                        foreach (string s in SerialPort.GetPortNames())
+                                        {
+                                            // 获取有多少个COM口  
+                                            cbSerial.BeginInvoke(new UpdateUI(() =>
+                                            {
+                                                cbSerial.Items.Add(s);
+                                            }));
+                                        }
 
-            // 串口设置默认选择项  
-            cbSerial.SelectedIndex = 0;         // 设置cbSerial的默认选项  
+                                        // 更新oldPortNamesLengt
+                                        oldPortNamesLength = SerialPort.GetPortNames().Length;
+
+                                        // 串口设置默认选择项  
+                                        cbSerial.BeginInvoke(new UpdateUI(() =>
+                                        {
+                                            cbSerial.SelectedIndex = 0;         // 设置cbSerial的默认选项  
+                                        }));
+                                    }
+                                    Thread.Sleep(500);
+                                }
+                            }
+                        }
+                    })
+                {
+                    IsBackground = true,
+                    Name = "Worker"
+                };
+                Worker.Start();
+            }
         }
 
         public void OpenSerial()
@@ -66,7 +109,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 serialPort.DataBits = 8;
                 serialPort.Parity = Parity.None;
                 serialPort.StopBits = StopBits.One;
-                serialPort.Open();
+                new Thread(() =>
+                {
+                    serialPort.Open();
+                }).Start();
                 System.Console.WriteLine("opened");
             }
         }

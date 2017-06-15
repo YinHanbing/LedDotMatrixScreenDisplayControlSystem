@@ -48,7 +48,6 @@
             // serialPort
             // 
             this.serialPort.ErrorReceived += new System.IO.Ports.SerialErrorReceivedEventHandler(this.SerialPort_ErrorReceived);
-            this.serialPort.PinChanged += new System.IO.Ports.SerialPinChangedEventHandler(this.SerialPort_PinChanged);
             this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort_DataReceived);
             // 
             // btnSendText
@@ -56,7 +55,7 @@
             this.btnSendText.Location = new System.Drawing.Point(210, 366);
             this.btnSendText.Name = "btnSendText";
             this.btnSendText.Size = new System.Drawing.Size(66, 23);
-            this.btnSendText.TabIndex = 7;
+            this.btnSendText.TabIndex = 5;
             this.btnSendText.Text = "发送文字";
             this.btnSendText.UseVisualStyleBackColor = true;
             this.btnSendText.Click += new System.EventHandler(this.BtnSendText_Click);
@@ -76,7 +75,7 @@
             this.tbTextInput.Multiline = true;
             this.tbTextInput.Name = "tbTextInput";
             this.tbTextInput.Size = new System.Drawing.Size(256, 256);
-            this.tbTextInput.TabIndex = 5;
+            this.tbTextInput.TabIndex = 4;
             // 
             // lbTextInput
             // 
@@ -84,7 +83,7 @@
             this.lbTextInput.Location = new System.Drawing.Point(18, 80);
             this.lbTextInput.Name = "lbTextInput";
             this.lbTextInput.Size = new System.Drawing.Size(77, 12);
-            this.lbTextInput.TabIndex = 4;
+            this.lbTextInput.TabIndex = 3;
             this.lbTextInput.Text = "文本输入区：";
             // 
             // lbPicInput
@@ -93,7 +92,7 @@
             this.lbPicInput.Location = new System.Drawing.Point(317, 80);
             this.lbPicInput.Name = "lbPicInput";
             this.lbPicInput.Size = new System.Drawing.Size(77, 12);
-            this.lbPicInput.TabIndex = 2;
+            this.lbPicInput.TabIndex = 4;
             this.lbPicInput.Text = "图片绘制区：";
             // 
             // lbSerialPort
@@ -111,9 +110,7 @@
             this.cbSerialPort.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbSerialPort.FormattingEnabled = true;
             this.cbSerialPort.Items.AddRange(new object[] {
-            "COM1",
-            "COM2",
-            "COM3"});
+            "没有可用串口"});
             this.cbSerialPort.Location = new System.Drawing.Point(20, 39);
             this.cbSerialPort.Name = "cbSerialPort";
             this.cbSerialPort.Size = new System.Drawing.Size(174, 20);
@@ -131,7 +128,7 @@
             this.cbBaudRate.Location = new System.Drawing.Point(319, 39);
             this.cbBaudRate.Name = "cbBaudRate";
             this.cbBaudRate.Size = new System.Drawing.Size(174, 20);
-            this.cbBaudRate.TabIndex = 9;
+            this.cbBaudRate.TabIndex = 2;
             this.cbBaudRate.SelectedIndexChanged += new System.EventHandler(this.CbBaudRate_SelectedIndexChanged);
             // 
             // lbBautRate
@@ -140,7 +137,7 @@
             this.lbBautRate.Location = new System.Drawing.Point(317, 20);
             this.lbBautRate.Name = "lbBautRate";
             this.lbBautRate.Size = new System.Drawing.Size(77, 12);
-            this.lbBautRate.TabIndex = 10;
+            this.lbBautRate.TabIndex = 2;
             this.lbBautRate.Text = "选择波特率：";
             // 
             // btnScan
@@ -148,7 +145,7 @@
             this.btnScan.Location = new System.Drawing.Point(210, 37);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(66, 23);
-            this.btnScan.TabIndex = 11;
+            this.btnScan.TabIndex = 1;
             this.btnScan.Text = "扫描串口";
             this.btnScan.UseVisualStyleBackColor = true;
             this.btnScan.Click += new System.EventHandler(this.BtnScan_Click);
@@ -158,6 +155,7 @@
             this.pbPicInput.Location = new System.Drawing.Point(319, 95);
             this.pbPicInput.Name = "pbPicInput";
             this.pbPicInput.Size = new System.Drawing.Size(256, 256);
+            this.pbPicInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbPicInput.TabIndex = 12;
             this.pbPicInput.TabStop = false;
             // 
@@ -166,7 +164,7 @@
             this.btnMonitor.Location = new System.Drawing.Point(509, 37);
             this.btnMonitor.Name = "btnMonitor";
             this.btnMonitor.Size = new System.Drawing.Size(66, 23);
-            this.btnMonitor.TabIndex = 13;
+            this.btnMonitor.TabIndex = 3;
             this.btnMonitor.Text = "监视点阵";
             this.btnMonitor.UseVisualStyleBackColor = true;
             this.btnMonitor.Click += new System.EventHandler(this.BtnMonitor_Click);
