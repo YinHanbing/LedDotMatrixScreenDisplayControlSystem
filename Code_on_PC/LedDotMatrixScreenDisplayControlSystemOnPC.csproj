@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{016B93DA-9F15-406A-9954-098037760804}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>LedDotMatrixScreenDisplaySystem</RootNamespace>
-    <AssemblyName>LedDotMatrixScreenDisplaySystem</AssemblyName>
+    <RootNamespace>LedDotMatrixScreenDisplaySystemOnPC</RootNamespace>
+    <AssemblyName>LedDotMatrixScreenDisplaySystemOnPC</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -75,6 +75,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
