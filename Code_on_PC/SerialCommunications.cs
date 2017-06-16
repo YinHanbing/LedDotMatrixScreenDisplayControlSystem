@@ -21,21 +21,29 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             this.cbBautRate = cbBautRate;
         }
 
-        public void SendData(string data)
+        public void SendData(DotMatrix16 data)
         {
-            serialPort.Write(data);
+            if (data != null)
+            {
+                serialPort.Write(data.DotMatrix, 0, 32); 
+            }
         }
 
-        public byte ReceiveData()
+        public DotMatrix16 ReceiveData()
         {
-            byte data = 0;
-            System.Threading.Thread.Sleep(100);
+            DotMatrix16 dotMatrix16 = null;
             byte[] m_recvBytes = new byte[serialPort.BytesToRead];//定义缓冲区大小
-            int result = serialPort.Read(m_recvBytes, 0, m_recvBytes.Length);//从串口读取数据
-            if (result <= 0)
-                return data;
+            for (int i = 0; i < 32; i++)
+            {
+                System.Threading.Thread.Sleep(100);
+                int result = serialPort.Read(m_recvBytes, 0, m_recvBytes.Length);//从串口读取数据 
+            }
             serialPort.DiscardInBuffer();
-            return data;
+            dotMatrix16.DotMatrix = m_recvBytes;
+
+            System.Console.WriteLine(dotMatrix16.DotMatrix);
+
+            return dotMatrix16;
         }
 
         public void ScanSerial()
@@ -119,7 +127,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         public void CloseSerial()
         {
-            serialPort.Close();
+            if (serialPort.IsOpen)
+            {
+                serialPort.Close();
+            }
         }
     }
 }

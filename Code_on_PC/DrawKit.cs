@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace LedDotMatrixScreenDisplaySystemOnPC
+namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
     class DrawKit
     {
@@ -18,7 +18,7 @@ namespace LedDotMatrixScreenDisplaySystemOnPC
             }));
         }
 
-        public static void Draw(PictureBox pictureBox, byte data)
+        public static void Draw(PictureBox pictureBox, DotMatrix16 data)
         {
 
         }

@@ -1,4 +1,4 @@
-﻿using LedDotMatrixScreenDisplaySystemOnPC;
+﻿using LedDotMatrixScreenDisplayControlSystemOnPC;
 using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC
@@ -25,8 +25,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            byte data = serialCommunications.ReceiveData();
-            DrawKit.Draw(pbPicInput, data);
+            DrawKit.Draw(pbPicInput, serialCommunications.ReceiveData());
         }
 
         private void SerialPort_ErrorReceived(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)
@@ -48,15 +47,8 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             if (serialCommunications != null)
             {
-                if (serialPort.IsOpen)
-                {
-                    serialCommunications.CloseSerial();
-                    serialCommunications.OpenSerial();
-                }
-                else
-                {
-                    serialCommunications.OpenSerial();
-                }
+                serialCommunications.CloseSerial();
+                serialCommunications.OpenSerial();
             }
         }
 
@@ -64,15 +56,8 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             if (serialCommunications != null)
             {
-                if (serialPort.IsOpen)
-                {
-                    serialCommunications.CloseSerial();
-                    serialCommunications.OpenSerial();
-                }
-                else
-                {
-                    serialCommunications.OpenSerial();
-                } 
+                serialCommunications.CloseSerial();
+                serialCommunications.OpenSerial();
             }
         }
 
@@ -80,7 +65,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             if (tbTextInput.Text.Length != 0)
             {
-                serialCommunications.SendData(tbTextInput.Text);
+                DotMatrix16 dotMatrix16 = new DotMatrix16();
+                dotMatrix16 = StringToDotMatrix16(tbTextInput.Text);
+                serialCommunications.SendData(dotMatrix16);
             }
         }
 
@@ -92,6 +79,17 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 fm.Show();
                 isFormMonitorShown = true;
             }
+        }
+
+        /// <summary>
+        /// 将字符串转换成点阵数组
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns>DotMatrix16</returns>
+        private DotMatrix16 StringToDotMatrix16(string str)
+        {
+            DotMatrix16 dotMatrix16 = null;
+            return dotMatrix16;
         }
     }
 }

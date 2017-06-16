@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LedDotMatrixScreenDisplaySystemOnPC.Properties {
+namespace LedDotMatrixScreenDisplayControlSystemOnPC.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace LedDotMatrixScreenDisplaySystemOnPC.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LedDotMatrixScreenDisplaySystemOnPC.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LedDotMatrixScreenDisplayControlSystemOnPC.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

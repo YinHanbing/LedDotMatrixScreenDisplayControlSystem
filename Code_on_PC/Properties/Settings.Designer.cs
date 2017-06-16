@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LedDotMatrixScreenDisplaySystemOnPC.Properties {
+namespace LedDotMatrixScreenDisplayControlSystemOnPC.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

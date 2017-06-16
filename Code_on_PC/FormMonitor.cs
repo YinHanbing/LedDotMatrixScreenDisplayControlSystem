@@ -1,4 +1,4 @@
-﻿using LedDotMatrixScreenDisplaySystemOnPC;
+﻿using LedDotMatrixScreenDisplayControlSystemOnPC;
 using System.IO.Ports;
 using System.Windows.Forms;
 
