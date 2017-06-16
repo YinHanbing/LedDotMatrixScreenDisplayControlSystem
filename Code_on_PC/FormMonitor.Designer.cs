@@ -38,7 +38,7 @@
             // 
             this.pbMonitor.Location = new System.Drawing.Point(12, 12);
             this.pbMonitor.Name = "pbMonitor";
-            this.pbMonitor.Size = new System.Drawing.Size(256, 256);
+            this.pbMonitor.Size = new System.Drawing.Size(257, 257);
             this.pbMonitor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbMonitor.TabIndex = 0;
             this.pbMonitor.TabStop = false;
@@ -53,7 +53,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 280);
+            this.ClientSize = new System.Drawing.Size(281, 281);
             this.Controls.Add(this.pbMonitor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;

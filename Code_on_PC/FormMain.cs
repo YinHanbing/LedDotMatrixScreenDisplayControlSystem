@@ -1,5 +1,4 @@
-﻿using LedDotMatrixScreenDisplayControlSystemOnPC;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
@@ -17,6 +16,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             serialCommunications.ScanSerial();
             isFormMonitorShown = false;
         }
+
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
@@ -90,6 +90,49 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             DotMatrix16 dotMatrix16 = null;
             return dotMatrix16;
+        }
+
+        private void pbPicInput_MouseClick(object sender, MouseEventArgs e)
+        {
+            int x = -1, y = -1; // 初始化位置
+
+            // 确定鼠标位置
+            for (int i = 0; i < 16; i++)
+            {
+                if (i * 16 <= e.Y && e.Y <= (i + 1) * 16)
+                {
+                    y = i;
+                }
+                for (int j = 0; j < 16; j++)
+                {
+                    if (j * 16 <= e.X && e.X <= (j + 1) * 16)
+                    {
+                        x = j;
+                        break;
+                    }
+                }
+            }
+            if (x != -1 && y != -1)
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    DrawKit.DrawDot(pbPicInput, x, y, DrawKit.FLAG_DRAW);
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    DrawKit.DrawDot(pbPicInput, x, y, DrawKit.FLAG_ERASER);
+                }
+            }
+        }
+
+        private void BtnClean_Click(object sender, System.EventArgs e)
+        {
+            DrawKit.InitCanvas(pbPicInput);
+        }
+
+        private void btnCleanText_Click(object sender, System.EventArgs e)
+        {
+            tbTextInput.Text = "";
         }
     }
 }

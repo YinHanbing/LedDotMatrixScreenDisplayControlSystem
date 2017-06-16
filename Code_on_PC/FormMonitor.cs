@@ -1,5 +1,4 @@
-﻿using LedDotMatrixScreenDisplayControlSystemOnPC;
-using System.IO.Ports;
+﻿using System.IO.Ports;
 using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC

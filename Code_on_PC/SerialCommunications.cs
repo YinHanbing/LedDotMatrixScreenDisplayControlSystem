@@ -1,5 +1,4 @@
 ﻿using System.IO.Ports;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -48,6 +47,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         public void ScanSerial()
         {
+            cbSerial.SelectedIndex = 0;
             if (Worker == null)
             {
                 Worker = new Thread(() =>

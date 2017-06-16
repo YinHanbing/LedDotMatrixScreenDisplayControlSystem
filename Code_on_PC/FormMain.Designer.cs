@@ -42,6 +42,8 @@
             this.btnScan = new System.Windows.Forms.Button();
             this.pbPicInput = new System.Windows.Forms.PictureBox();
             this.btnMonitor = new System.Windows.Forms.Button();
+            this.btnCleanPic = new System.Windows.Forms.Button();
+            this.btnCleanText = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbPicInput)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +54,7 @@
             // 
             // btnSendText
             // 
-            this.btnSendText.Location = new System.Drawing.Point(210, 366);
+            this.btnSendText.Location = new System.Drawing.Point(20, 366);
             this.btnSendText.Name = "btnSendText";
             this.btnSendText.Size = new System.Drawing.Size(66, 23);
             this.btnSendText.TabIndex = 5;
@@ -62,10 +64,10 @@
             // 
             // btnSendPic
             // 
-            this.btnSendPic.Location = new System.Drawing.Point(509, 366);
+            this.btnSendPic.Location = new System.Drawing.Point(319, 366);
             this.btnSendPic.Name = "btnSendPic";
             this.btnSendPic.Size = new System.Drawing.Size(66, 23);
-            this.btnSendPic.TabIndex = 6;
+            this.btnSendPic.TabIndex = 7;
             this.btnSendPic.Text = "发送图片";
             this.btnSendPic.UseVisualStyleBackColor = true;
             // 
@@ -74,7 +76,7 @@
             this.tbTextInput.Location = new System.Drawing.Point(20, 95);
             this.tbTextInput.Multiline = true;
             this.tbTextInput.Name = "tbTextInput";
-            this.tbTextInput.Size = new System.Drawing.Size(256, 256);
+            this.tbTextInput.Size = new System.Drawing.Size(257, 257);
             this.tbTextInput.TabIndex = 4;
             // 
             // lbTextInput
@@ -93,7 +95,7 @@
             this.lbPicInput.Name = "lbPicInput";
             this.lbPicInput.Size = new System.Drawing.Size(77, 12);
             this.lbPicInput.TabIndex = 4;
-            this.lbPicInput.Text = "图片绘制区：";
+            this.lbPicInput.Text = "图案绘制区：";
             // 
             // lbSerialPort
             // 
@@ -142,7 +144,7 @@
             // 
             // btnScan
             // 
-            this.btnScan.Location = new System.Drawing.Point(210, 37);
+            this.btnScan.Location = new System.Drawing.Point(211, 37);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(66, 23);
             this.btnScan.TabIndex = 1;
@@ -154,14 +156,15 @@
             // 
             this.pbPicInput.Location = new System.Drawing.Point(319, 95);
             this.pbPicInput.Name = "pbPicInput";
-            this.pbPicInput.Size = new System.Drawing.Size(256, 256);
+            this.pbPicInput.Size = new System.Drawing.Size(257, 257);
             this.pbPicInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbPicInput.TabIndex = 12;
             this.pbPicInput.TabStop = false;
+            this.pbPicInput.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbPicInput_MouseClick);
             // 
             // btnMonitor
             // 
-            this.btnMonitor.Location = new System.Drawing.Point(509, 37);
+            this.btnMonitor.Location = new System.Drawing.Point(510, 37);
             this.btnMonitor.Name = "btnMonitor";
             this.btnMonitor.Size = new System.Drawing.Size(66, 23);
             this.btnMonitor.TabIndex = 3;
@@ -169,11 +172,33 @@
             this.btnMonitor.UseVisualStyleBackColor = true;
             this.btnMonitor.Click += new System.EventHandler(this.BtnMonitor_Click);
             // 
+            // btnCleanPic
+            // 
+            this.btnCleanPic.Location = new System.Drawing.Point(510, 366);
+            this.btnCleanPic.Name = "btnCleanPic";
+            this.btnCleanPic.Size = new System.Drawing.Size(66, 23);
+            this.btnCleanPic.TabIndex = 8;
+            this.btnCleanPic.Text = "清除图案";
+            this.btnCleanPic.UseVisualStyleBackColor = true;
+            this.btnCleanPic.Click += new System.EventHandler(this.BtnClean_Click);
+            // 
+            // btnCleanText
+            // 
+            this.btnCleanText.Location = new System.Drawing.Point(211, 366);
+            this.btnCleanText.Name = "btnCleanText";
+            this.btnCleanText.Size = new System.Drawing.Size(66, 23);
+            this.btnCleanText.TabIndex = 6;
+            this.btnCleanText.Text = "清空文字";
+            this.btnCleanText.UseVisualStyleBackColor = true;
+            this.btnCleanText.Click += new System.EventHandler(this.btnCleanText_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(606, 410);
+            this.Controls.Add(this.btnCleanText);
+            this.Controls.Add(this.btnCleanPic);
             this.Controls.Add(this.btnMonitor);
             this.Controls.Add(this.pbPicInput);
             this.Controls.Add(this.btnScan);
@@ -213,6 +238,8 @@
         private System.Windows.Forms.Button btnScan;
         private System.Windows.Forms.PictureBox pbPicInput;
         private System.Windows.Forms.Button btnMonitor;
+        private System.Windows.Forms.Button btnCleanPic;
+        private System.Windows.Forms.Button btnCleanText;
     }
 }
 
