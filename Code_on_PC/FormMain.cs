@@ -69,7 +69,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
                 for (int i = 0; i < tbTextInput.Text.Length; i++)
                 {
-                    serialCommunications.SendData(dotMatrix16s[i]); 
+                    serialCommunications.SendData(dotMatrix16s[i]);
                 }
             }
         }
