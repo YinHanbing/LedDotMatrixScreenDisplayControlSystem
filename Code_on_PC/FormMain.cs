@@ -98,20 +98,31 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private DotMatrix16[] StringToDotMatrix16(string str)
         {
             DotMatrix16[] dotMatrix16s = new DotMatrix16[str.Length];
+            string[] stringTarget = new string[str.Length];
             Bitmap bmp = new Bitmap(16, 16);
             Graphics g = Graphics.FromImage(bmp);
             g.FillRectangle(Brushes.White, new Rectangle() { X = 0, Y = 0, Height = 16, Width = 16 });
-            g.DrawString(tbTextInput.Text, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(0), Y = Convert.ToSingle(0) });
-            string stringbin = string.Join("", Enumerable.Range(0, 256).Select(a => new { x = a % 16, y = a / 16 })
-                .Select(x => bmp.GetPixel(x.x, x.y).GetBrightness() > 0.5f ? "0" : "1"));
-            Console.WriteLine(stringbin);
-
-            string[] stringTarget = new string[str.Length];
             for (int i = 0; i < str.Length; i++)
             {
-                stringTarget[i] = stringbin.Substring(i * 256, (i + 1) * 256);
-                //dotMatrix16s[i].DotMatrix = Byte
+                g.DrawString(tbTextInput.Text.Substring(i, 1), tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(0), Y = Convert.ToSingle(2) });
+                stringTarget[i] = string.Join("", Enumerable.Range(0, 256).Select(a => new { x = a % 16, y = a / 16 })
+                    .Select(x => bmp.GetPixel(x.x, x.y).GetBrightness() > 0.5f ? "0" : "1"));
+                Console.WriteLine(stringTarget[i]);
+                dotMatrix16s[i] = new DotMatrix16();
+                for (int j = 0; j < 32; j++)
+                {
+                    int intbyte = 0;
+                    for (int k = 0; k < 8; k++)
+                    {
+                        intbyte += Convert.ToInt16((stringTarget[i].Substring(j * 8, 8).Substring(k, 1))) * (int)Math.Pow(2, 7 - k);
+                    }
+                    dotMatrix16s[i].DotMatrix[j] = Convert.ToByte(intbyte);
+                }
             }
+
+            dotMatrix16s[0].PrintMatrix16();
+            DrawKit.DotMatrix16 = dotMatrix16s[0];
+            DrawKit.Draw(pbPicInput, DrawKit.DotMatrix16);
             return dotMatrix16s;
         }
 

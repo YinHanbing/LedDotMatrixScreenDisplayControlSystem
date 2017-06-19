@@ -22,7 +22,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         public void SendData(DotMatrix16 data)
         {
-            if (data != null)
+            if (data != null && serialPort.IsOpen)
             {
                 serialPort.Write(data.DotMatrix, 0, 32);
                 System.Console.WriteLine("SendSuccess");
