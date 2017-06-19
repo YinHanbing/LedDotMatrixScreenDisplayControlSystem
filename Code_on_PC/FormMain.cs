@@ -23,7 +23,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
-            DrawKit.InitCanvas(pbPicInput);
+            DrawKit.InitCanvas(pbPicInput, DrawKit.DotMatrix16);
         }
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -139,18 +139,18 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    DrawKit.DrawDot(pbPicInput, x, y, DrawKit.FLAG_DRAW);
+                    DrawKit.DrawDot(pbPicInput, DrawKit.DotMatrix16, x, y, DrawKit.FLAG_DRAW);
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
-                    DrawKit.DrawDot(pbPicInput, x, y, DrawKit.FLAG_ERASER);
+                    DrawKit.DrawDot(pbPicInput, DrawKit.DotMatrix16, x, y, DrawKit.FLAG_ERASER);
                 }
             }
         }
 
         private void BtnClean_Click(object sender, System.EventArgs e)
         {
-            DrawKit.InitCanvas(pbPicInput);
+            DrawKit.InitCanvas(pbPicInput, DrawKit.DotMatrix16);
         }
 
         private void BtnCleanText_Click(object sender, System.EventArgs e)

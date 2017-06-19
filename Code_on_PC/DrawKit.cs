@@ -16,8 +16,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         /// <summary>
         /// 初始化画布
         /// </summary>
-        /// <param name="pictureBox"></param>
-        public static void InitCanvas(PictureBox pictureBox)
+        /// <param name="pictureBox">绘图区域</param>
+        /// <param name="dotMatrix16">点阵数据</param>
+        public static void InitCanvas(PictureBox pictureBox, DotMatrix16 dotMatrix16)
         {
             pictureBox.Invoke(new UpdateUI(() =>
             {
@@ -55,9 +56,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 pictureBox.Image = bitmap;
             }));
 
-            // 初始化DotMatrix16
-            DotMatrix16 = new DotMatrix16();
-            DotMatrix16.PrintMatrix16();
+            // 初始化dotMatrix16
+            dotMatrix16 = new DotMatrix16();
+            dotMatrix16.PrintMatrix16();
             System.Console.WriteLine("drawCanvas");
         }
 
@@ -65,17 +66,17 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         /// 根据点阵数据直接绘图
         /// </summary>
         /// <param name="pictureBox">绘图区域</param>
-        /// <param name="data">绘图数据</param>
-        public static void Draw(PictureBox pictureBox, DotMatrix16 data)
+        /// <param name="dotMatrix16">绘图数据</param>
+        public static void Draw(PictureBox pictureBox, DotMatrix16 dotMatrix16)
         {
-            InitCanvas(pictureBox);
+            InitCanvas(pictureBox, dotMatrix16);
             for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    if (data.GetDot(j, i))
+                    if (dotMatrix16.GetDot(j, i))
                     {
-                        DrawDot(pictureBox, j, i, FLAG_DRAW);
+                        DrawDot(pictureBox, dotMatrix16, j, i, FLAG_DRAW);
                     }
                 }
             }
@@ -84,11 +85,12 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         /// <summary>
         /// 在pictureBox中画点
         /// </summary>
-        /// <param name="pictureBox">画图区域</param>
+        /// <param name="pictureBox">绘图区域</param>
+        /// <param name="dotMatrix16">点阵数据</param>
         /// <param name="x">列：0 <= x <= 15</param>
         /// <param name="y">行：0 <= y <= 15</param>
         /// <param name="flag">DrawKit.</param>
-        public static void DrawDot(PictureBox pictureBox, int x, int y, string flag)
+        public static void DrawDot(PictureBox pictureBox, DotMatrix16 dotMatrix16, int x, int y, string flag)
         {
             if (x >= 0 && x <= 15 && y >= 0 && y <= 15)
             {
@@ -109,20 +111,20 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                        }
                        if (flag == FLAG_DRAW)
                        {
-                           if (!DotMatrix16.GetDot(x, y))
+                           if (!dotMatrix16.GetDot(x, y))
                            {
-                               System.Console.WriteLine(DotMatrix16.GetDot(x, y));
+                               System.Console.WriteLine(dotMatrix16.GetDot(x, y));
                                graphics.FillEllipse(Brushes.Red, rect[x, y]);
-                               DotMatrix16.SetDot(x, y, FLAG_DRAW);
+                               dotMatrix16.SetDot(x, y, FLAG_DRAW);
                            }
                        }
                        else if (flag == FLAG_ERASER)
                        {
-                           if (DotMatrix16.GetDot(x, y))
+                           if (dotMatrix16.GetDot(x, y))
                            {
-                               System.Console.WriteLine(DotMatrix16.GetDot(x, y));
+                               System.Console.WriteLine(dotMatrix16.GetDot(x, y));
                                graphics.FillEllipse(Brushes.White, rect[x, y]);
-                               DotMatrix16.SetDot(x, y, FLAG_ERASER);
+                               dotMatrix16.SetDot(x, y, FLAG_ERASER);
                            }
                        }
                        graphics.Dispose();
