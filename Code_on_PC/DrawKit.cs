@@ -9,7 +9,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private static DotMatrix16 dotMatrix16;
 
         public const string FLAG_DRAW = "DRAW";
-        public const string FLAG_ERASER = "ERASER";
+        public const string FLAG_ERASE = "ERASE";
 
         public static DotMatrix16 DotMatrix16 { get => dotMatrix16; set => dotMatrix16 = value; }
 
@@ -59,7 +59,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             // 初始化dotMatrix16
             dotMatrix16 = new DotMatrix16();
             dotMatrix16.PrintMatrix16();
-            System.Console.WriteLine("drawCanvas");
+            System.Console.WriteLine("InitCanvas");
         }
 
         /// <summary>
@@ -98,38 +98,31 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                    {
                        Bitmap bitmap = new Bitmap(pictureBox.Image);
                        Graphics graphics = Graphics.FromImage(bitmap);
-                       Rectangle[,] rect = new Rectangle[16, 16];
                        graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
                        // 画点
-                       for (int i = 0; i < 16; i++)
-                       {
-                           for (int j = 0; j < 16; j++)
-                           {
-                               rect[i, j] = new Rectangle(i * 16, j * 16, 16, 16);
-                           }
-                       }
                        if (flag == FLAG_DRAW)
                        {
                            if (!dotMatrix16.GetDot(x, y))
                            {
                                System.Console.WriteLine(dotMatrix16.GetDot(x, y));
-                               graphics.FillEllipse(Brushes.Red, rect[x, y]);
+                               graphics.FillEllipse(Brushes.Red, new Rectangle(x * 16, y * 16, 16, 16));
                                dotMatrix16.SetDot(x, y, FLAG_DRAW);
+                               System.Console.WriteLine("DrawDot");
                            }
                        }
-                       else if (flag == FLAG_ERASER)
+                       else if (flag == FLAG_ERASE)
                        {
                            if (dotMatrix16.GetDot(x, y))
                            {
                                System.Console.WriteLine(dotMatrix16.GetDot(x, y));
-                               graphics.FillEllipse(Brushes.White, rect[x, y]);
-                               dotMatrix16.SetDot(x, y, FLAG_ERASER);
+                               graphics.FillEllipse(Brushes.White, new Rectangle(x * 16, y * 16, 16, 16));
+                               dotMatrix16.SetDot(x, y, FLAG_ERASE);
+                               System.Console.WriteLine("EraseDot");
                            }
                        }
                        graphics.Dispose();
                        pictureBox.Image = bitmap;
-                       System.Console.WriteLine("drawDot");
                    }));
             }
         }

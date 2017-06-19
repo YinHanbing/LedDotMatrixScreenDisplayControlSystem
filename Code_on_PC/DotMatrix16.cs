@@ -43,7 +43,7 @@
                 {
                     DotMatrix[y * 2 + x / 8] = (byte)(DotMatrix[y * 2 + x / 8] | (0x0100 >> (x % 8 + 1)));
                 }
-                else if (flag == DrawKit.FLAG_ERASER)
+                else if (flag == DrawKit.FLAG_ERASE)
                 {
                     DotMatrix[y * 2 + x / 8] = (byte)(DotMatrix[y * 2 + x / 8] & (0xfeff >> (x % 8 + 1)));
                 }

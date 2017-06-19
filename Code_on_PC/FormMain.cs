@@ -125,14 +125,15 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 if (i * 16 <= e.Y && e.Y <= (i + 1) * 16)
                 {
                     y = i;
+                    break;
                 }
-                for (int j = 0; j < 16; j++)
+            }
+            for (int j = 0; j < 16; j++)
+            {
+                if (j * 16 <= e.X && e.X <= (j + 1) * 16)
                 {
-                    if (j * 16 <= e.X && e.X <= (j + 1) * 16)
-                    {
-                        x = j;
-                        break;
-                    }
+                    x = j;
+                    break;
                 }
             }
             if (x != -1 && y != -1)
@@ -143,7 +144,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
-                    DrawKit.DrawDot(pbPicInput, DrawKit.DotMatrix16, x, y, DrawKit.FLAG_ERASER);
+                    DrawKit.DrawDot(pbPicInput, DrawKit.DotMatrix16, x, y, DrawKit.FLAG_ERASE);
                 }
             }
         }
