@@ -42,7 +42,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void FormMonitor_Load(object sender, System.EventArgs e)
         {
-            DrawKit.InitCanvas(pbMonitor);
+            DrawKit.InitCanvas(pbMonitor,DrawKit.DotMatrix16);
         }
 
         private void BtnUpdate_Click(object sender, System.EventArgs e)
