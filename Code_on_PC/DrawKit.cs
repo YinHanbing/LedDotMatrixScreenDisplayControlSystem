@@ -13,6 +13,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         public static DotMatrix16 DotMatrix16 { get => dotMatrix16; set => dotMatrix16 = value; }
 
+        /// <summary>
+        /// 初始化画布
+        /// </summary>
+        /// <param name="pictureBox"></param>
         public static void InitCanvas(PictureBox pictureBox)
         {
             pictureBox.Invoke(new UpdateUI(() =>
@@ -49,17 +53,32 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
                 graphics.Dispose();
                 pictureBox.Image = bitmap;
-                System.Console.WriteLine("draw");
             }));
 
             // 初始化DotMatrix16
             DotMatrix16 = new DotMatrix16();
             DotMatrix16.PrintMatrix16();
+            System.Console.WriteLine("drawCanvas");
         }
 
+        /// <summary>
+        /// 根据点阵数据直接绘图
+        /// </summary>
+        /// <param name="pictureBox">绘图区域</param>
+        /// <param name="data">绘图数据</param>
         public static void Draw(PictureBox pictureBox, DotMatrix16 data)
         {
-
+            InitCanvas(pictureBox);
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    if (data.GetDot(j, i))
+                    {
+                        DrawDot(pictureBox, j, i, FLAG_DRAW);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -108,7 +127,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                        }
                        graphics.Dispose();
                        pictureBox.Image = bitmap;
-                       System.Console.WriteLine("draw");
+                       System.Console.WriteLine("drawDot");
                    }));
             }
         }

@@ -1,4 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
@@ -69,7 +72,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
                 for (int i = 0; i < tbTextInput.Text.Length; i++)
                 {
-                    serialCommunications.SendData(dotMatrix16s[i]); 
+                    if (dotMatrix16s.Length != 0)
+                    {
+                        serialCommunications.SendData(dotMatrix16s[i]);
+                    }
                 }
             }
         }
@@ -91,8 +97,22 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         /// <returns>DotMatrix16</returns>
         private DotMatrix16[] StringToDotMatrix16(string str)
         {
-            DotMatrix16[] dotMatrix16 = null;
-            return dotMatrix16;
+            DotMatrix16[] dotMatrix16s = new DotMatrix16[str.Length];
+            Bitmap bmp = new Bitmap(16, 16);
+            Graphics g = Graphics.FromImage(bmp);
+            g.FillRectangle(Brushes.White, new Rectangle() { X = 0, Y = 0, Height = 16, Width = 16 });
+            g.DrawString(tbTextInput.Text, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(0), Y = Convert.ToSingle(0) });
+            string stringbin = string.Join("", Enumerable.Range(0, 256).Select(a => new { x = a % 16, y = a / 16 })
+                .Select(x => bmp.GetPixel(x.x, x.y).GetBrightness() > 0.5f ? "0" : "1"));
+            Console.WriteLine(stringbin);
+
+            string[] stringTarget = new string[str.Length];
+            for (int i = 0; i < str.Length; i++)
+            {
+                stringTarget[i] = stringbin.Substring(i * 256, (i + 1) * 256);
+                //dotMatrix16s[i].DotMatrix = Byte
+            }
+            return dotMatrix16s;
         }
 
         private void PbPicInput_MouseClick(object sender, MouseEventArgs e)
@@ -136,6 +156,11 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private void BtnCleanText_Click(object sender, System.EventArgs e)
         {
             tbTextInput.Text = "";
+        }
+
+        private void BtnSendPic_Click(object sender, System.EventArgs e)
+        {
+            serialCommunications.SendData(DrawKit.DotMatrix16);
         }
     }
 }

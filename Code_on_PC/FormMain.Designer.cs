@@ -70,6 +70,7 @@
             this.btnSendPic.TabIndex = 7;
             this.btnSendPic.Text = "发送图片";
             this.btnSendPic.UseVisualStyleBackColor = true;
+            this.btnSendPic.Click += new System.EventHandler(this.BtnSendPic_Click);
             // 
             // tbTextInput
             // 
