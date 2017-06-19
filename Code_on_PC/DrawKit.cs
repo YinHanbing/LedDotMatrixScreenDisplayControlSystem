@@ -51,6 +51,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 pictureBox.Image = bitmap;
                 System.Console.WriteLine("draw");
             }));
+
+            // 初始化DotMatrix16
+            DotMatrix16 = new DotMatrix16();
+            DotMatrix16.PrintMatrix16();
         }
 
         public static void Draw(PictureBox pictureBox, DotMatrix16 data)
@@ -58,6 +62,13 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         }
 
+        /// <summary>
+        /// 在pictureBox中画点
+        /// </summary>
+        /// <param name="pictureBox">画图区域</param>
+        /// <param name="x">列：0 <= x <= 15</param>
+        /// <param name="y">行：0 <= y <= 15</param>
+        /// <param name="flag">DrawKit.</param>
         public static void DrawDot(PictureBox pictureBox, int x, int y, string flag)
         {
             if (x >= 0 && x <= 15 && y >= 0 && y <= 15)
@@ -79,13 +90,21 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                        }
                        if (flag == FLAG_DRAW)
                        {
-                           graphics.FillEllipse(Brushes.Red, rect[x, y]);
-                           LedDotMatrixScreenDisplayControlSystemOnPC.DotMatrix16.SetDot(x, y, FLAG_DRAW);
+                           if (!DotMatrix16.GetDot(x, y))
+                           {
+                               System.Console.WriteLine(DotMatrix16.GetDot(x, y));
+                               graphics.FillEllipse(Brushes.Red, rect[x, y]);
+                               DotMatrix16.SetDot(x, y, FLAG_DRAW);
+                           }
                        }
                        else if (flag == FLAG_ERASER)
                        {
-                           graphics.FillEllipse(Brushes.White, rect[x, y]);
-                           LedDotMatrixScreenDisplayControlSystemOnPC.DotMatrix16.SetDot(x, y, FLAG_ERASER);
+                           if (DotMatrix16.GetDot(x, y))
+                           {
+                               System.Console.WriteLine(DotMatrix16.GetDot(x, y));
+                               graphics.FillEllipse(Brushes.White, rect[x, y]);
+                               DotMatrix16.SetDot(x, y, FLAG_ERASER);
+                           }
                        }
                        graphics.Dispose();
                        pictureBox.Image = bitmap;
