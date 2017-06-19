@@ -37,17 +37,20 @@
         /// <param name="flag">DrawKit.</param>
         public void SetDot(int x, int y, string flag)
         {
-            if (flag == DrawKit.FLAG_DRAW)
+            if (0 <= x && x <= 15 && 0 <= y && y <= 15)
             {
-                DotMatrix[y * 2 + x / 8] = (byte)(DotMatrix[y * 2 + x / 8] | (0x0100 >> (x % 8 + 1)));
-            }
-            else if (flag == DrawKit.FLAG_ERASER)
-            {
-                DotMatrix[y * 2 + x / 8] = (byte)(DotMatrix[y * 2 + x / 8] & (0xfeff >> (x % 8 + 1)));
-            }
+                if (flag == DrawKit.FLAG_DRAW)
+                {
+                    DotMatrix[y * 2 + x / 8] = (byte)(DotMatrix[y * 2 + x / 8] | (0x0100 >> (x % 8 + 1)));
+                }
+                else if (flag == DrawKit.FLAG_ERASER)
+                {
+                    DotMatrix[y * 2 + x / 8] = (byte)(DotMatrix[y * 2 + x / 8] & (0xfeff >> (x % 8 + 1)));
+                }
 
-            // 打印矩阵
-            PrintMatrix16();
+                // 打印矩阵
+                PrintMatrix16(); 
+            }
         }
 
         // 打印矩阵
@@ -76,14 +79,18 @@
         /// <returns></returns>
         public bool GetDot(int x, int y)
         {
-            if (((DotMatrix[y * 2 + x / 8] >> (7 - x % 8)) & 0x01) != 0)
+            if (0 <= x && x <= 15 && 0 <= y && y <= 15)
             {
-                return true;
+                if (((DotMatrix[y * 2 + x / 8] >> (7 - x % 8)) & 0x01) != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

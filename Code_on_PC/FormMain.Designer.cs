@@ -160,7 +160,7 @@
             this.pbPicInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbPicInput.TabIndex = 12;
             this.pbPicInput.TabStop = false;
-            this.pbPicInput.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbPicInput_MouseClick);
+            this.pbPicInput.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PbPicInput_MouseClick);
             // 
             // btnMonitor
             // 
@@ -190,7 +190,7 @@
             this.btnCleanText.TabIndex = 6;
             this.btnCleanText.Text = "清空文字";
             this.btnCleanText.UseVisualStyleBackColor = true;
-            this.btnCleanText.Click += new System.EventHandler(this.btnCleanText_Click);
+            this.btnCleanText.Click += new System.EventHandler(this.BtnCleanText_Click);
             // 
             // FormMain
             // 

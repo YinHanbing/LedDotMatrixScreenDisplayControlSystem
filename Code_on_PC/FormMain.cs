@@ -65,9 +65,12 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             if (tbTextInput.Text.Length != 0)
             {
-                DotMatrix16 dotMatrix16 = new DotMatrix16();
-                dotMatrix16 = StringToDotMatrix16(tbTextInput.Text);
-                serialCommunications.SendData(dotMatrix16);
+                DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
+                dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
+                for (int i = 0; i < tbTextInput.Text.Length; i++)
+                {
+                    serialCommunications.SendData(dotMatrix16s[i]); 
+                }
             }
         }
 
@@ -86,13 +89,13 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         /// </summary>
         /// <param name="str"></param>
         /// <returns>DotMatrix16</returns>
-        private DotMatrix16 StringToDotMatrix16(string str)
+        private DotMatrix16[] StringToDotMatrix16(string str)
         {
-            DotMatrix16 dotMatrix16 = null;
+            DotMatrix16[] dotMatrix16 = null;
             return dotMatrix16;
         }
 
-        private void pbPicInput_MouseClick(object sender, MouseEventArgs e)
+        private void PbPicInput_MouseClick(object sender, MouseEventArgs e)
         {
             int x = -1, y = -1; // 初始化位置
 
@@ -130,7 +133,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             DrawKit.InitCanvas(pbPicInput);
         }
 
-        private void btnCleanText_Click(object sender, System.EventArgs e)
+        private void BtnCleanText_Click(object sender, System.EventArgs e)
         {
             tbTextInput.Text = "";
         }
