@@ -1,4 +1,5 @@
-﻿using System.IO.Ports;
+﻿using System;
+using System.IO.Ports;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -24,7 +25,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             if (data != null)
             {
-                serialPort.Write(data.DotMatrix, 0, 32); 
+                serialPort.Write(data.DotMatrix, 0, 32);
             }
         }
 
@@ -105,6 +106,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 };
                 Worker.Start();
             }
+        }
+
+        public void SendUpdate()
+        {
         }
 
         public void OpenSerial()

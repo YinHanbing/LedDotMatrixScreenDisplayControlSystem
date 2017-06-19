@@ -28,5 +28,23 @@
         }
 
         public byte[] DotMatrix { get => dotMatrix16; set => dotMatrix16 = value; }
+
+        public void SetDot(int x, int y, string flag)
+        {
+            if (flag == DrawKit.FLAG_DRAW)
+            {
+
+            }
+            else if (flag == DrawKit.FLAG_ERASER)
+            {
+
+            }
+
+        }
+
+        public bool GetDot(int x, int y)
+        {
+            return true;
+        }
     }
 }

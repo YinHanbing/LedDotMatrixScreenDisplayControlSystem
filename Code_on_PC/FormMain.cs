@@ -15,8 +15,8 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             serialCommunications = new SerialCommunications(serialPort, cbSerialPort, cbBaudRate);
             serialCommunications.ScanSerial();
             isFormMonitorShown = false;
+            DrawKit.DotMatrix16 = new DotMatrix16();
         }
-
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
@@ -25,7 +25,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            DrawKit.Draw(pbPicInput, serialCommunications.ReceiveData());
+
         }
 
         private void SerialPort_ErrorReceived(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)

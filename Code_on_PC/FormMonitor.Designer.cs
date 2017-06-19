@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.pbMonitor = new System.Windows.Forms.PictureBox();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
+            this.btnUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbMonitor)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,15 +46,26 @@
             // 
             // serialPort
             // 
-            this.serialPort.ErrorReceived += new System.IO.Ports.SerialErrorReceivedEventHandler(this.SerialPort1_ErrorReceived);
-            this.serialPort.PinChanged += new System.IO.Ports.SerialPinChangedEventHandler(this.SerialPort1_PinChanged);
-            this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort1_DataReceived);
+            this.serialPort.ErrorReceived += new System.IO.Ports.SerialErrorReceivedEventHandler(this.SerialPort_ErrorReceived);
+            this.serialPort.PinChanged += new System.IO.Ports.SerialPinChangedEventHandler(this.SerialPort_PinChanged);
+            this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort_DataReceived);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(194, 275);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.TabIndex = 1;
+            this.btnUpdate.Text = "更新数据";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
             // FormMonitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 281);
+            this.ClientSize = new System.Drawing.Size(281, 305);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.pbMonitor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -72,5 +84,6 @@
 
         private System.Windows.Forms.PictureBox pbMonitor;
         private System.IO.Ports.SerialPort serialPort;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }
