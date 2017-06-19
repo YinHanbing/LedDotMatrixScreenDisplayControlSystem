@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO.Ports;
+﻿using System.IO.Ports;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -26,6 +25,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             if (data != null)
             {
                 serialPort.Write(data.DotMatrix, 0, 32);
+                System.Console.WriteLine("SendSuccess");
             }
         }
 
@@ -124,7 +124,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 serialPort.StopBits = StopBits.One;
                 new Thread(() =>
                 {
-                    serialPort.Open();
+                    if (serialPort.PortName.Contains("COM"))
+                    {
+                        serialPort.Open();
+                    }
                 }).Start();
                 System.Console.WriteLine("opened");
             }

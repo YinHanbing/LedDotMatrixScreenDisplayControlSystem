@@ -137,5 +137,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             tbTextInput.Text = "";
         }
+
+        private void BtnSendPic_Click(object sender, System.EventArgs e)
+        {
+            serialCommunications.SendData(DrawKit.DotMatrix16);
+        }
     }
 }
