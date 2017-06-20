@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            FormMonitor.pbMonitor = new System.Windows.Forms.PictureBox();
+            pbMonitor = new System.Windows.Forms.PictureBox();
             this.btnUpdate = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(FormMonitor.pbMonitor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(pbMonitor)).BeginInit();
             this.SuspendLayout();
             // 
             // pbMonitor
             // 
-            FormMonitor.pbMonitor.Location = new System.Drawing.Point(12, 12);
-            FormMonitor.pbMonitor.Name = "pbMonitor";
-            FormMonitor.pbMonitor.Size = new System.Drawing.Size(257, 257);
-            FormMonitor.pbMonitor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            FormMonitor.pbMonitor.TabIndex = 0;
-            FormMonitor.pbMonitor.TabStop = false;
+            pbMonitor.Location = new System.Drawing.Point(12, 12);
+            pbMonitor.Name = "pbMonitor";
+            pbMonitor.Size = new System.Drawing.Size(257, 257);
+            pbMonitor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            pbMonitor.TabIndex = 0;
+            pbMonitor.TabStop = false;
             // 
             // btnUpdate
             // 
@@ -58,7 +58,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 305);
             this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(FormMonitor.pbMonitor);
+            this.Controls.Add(pbMonitor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormMonitor";
@@ -67,7 +67,7 @@
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMonitor_FormClosed);
             this.Load += new System.EventHandler(this.FormMonitor_Load);
-            ((System.ComponentModel.ISupportInitialize)(FormMonitor.pbMonitor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(pbMonitor)).EndInit();
             this.ResumeLayout(false);
 
         }

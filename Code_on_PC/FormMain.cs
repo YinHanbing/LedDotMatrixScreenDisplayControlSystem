@@ -12,7 +12,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private SerialCommunications serialCommunications;
         private delegate void UpdateUI();
         private string oldString = "";
+        private DotMatrix16 dotMatrix16_Send;
         public static bool isFormMonitorShown;
+        public static DotMatrix16 dotMatrix16_Receive;
 
         public FormMain()
         {
@@ -21,20 +23,21 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             serialCommunications = new SerialCommunications(serialPort, cbSerialPort, cbBaudRate);
             serialCommunications.ScanSerial();
             isFormMonitorShown = false;
-            DrawKit.DotMatrix16 = new DotMatrix16();
+            dotMatrix16_Send = new DotMatrix16();
+            dotMatrix16_Receive = new DotMatrix16();
         }
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
-            DrawKit.InitCanvas(pbPicInput, DrawKit.DotMatrix16);
+            DrawKit.InitCanvas(pbPicInput, dotMatrix16_Send);
         }
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            DrawKit.DotMatrix16 = serialCommunications.ReceiveData();
+            dotMatrix16_Receive = serialCommunications.ReceiveData();
             if (FormMonitor.pbMonitor != null)
             {
-                DrawKit.Draw(FormMonitor.pbMonitor, DrawKit.DotMatrix16); 
+                DrawKit.Draw(FormMonitor.pbMonitor, dotMatrix16_Receive);
             }
         }
 
@@ -75,7 +78,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             if (tbTextInput.Text.Length != 0 && !tbTextInput.Text.Equals(oldString))
             {
-                
+
                 DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
                 dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
                 for (int i = 0; i < tbTextInput.Text.Length; i++)
@@ -170,18 +173,18 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    DrawKit.DrawDot(pbPicInput, DrawKit.DotMatrix16, x, y, DrawKit.FLAG_DRAW);
+                    DrawKit.DrawDot(pbPicInput, dotMatrix16_Send, x, y, DrawKit.FLAG_DRAW);
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
-                    DrawKit.DrawDot(pbPicInput, DrawKit.DotMatrix16, x, y, DrawKit.FLAG_ERASE);
+                    DrawKit.DrawDot(pbPicInput, dotMatrix16_Send, x, y, DrawKit.FLAG_ERASE);
                 }
             }
         }
 
         private void BtnClean_Click(object sender, System.EventArgs e)
         {
-            DrawKit.InitCanvas(pbPicInput, DrawKit.DotMatrix16);
+            DrawKit.InitCanvas(pbPicInput, dotMatrix16_Send);
         }
 
         private void BtnCleanText_Click(object sender, System.EventArgs e)
@@ -191,7 +194,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void BtnSendPic_Click(object sender, System.EventArgs e)
         {
-            serialCommunications.SendData(DrawKit.DotMatrix16);
+            serialCommunications.SendData(dotMatrix16_Send);
         }
     }
 }
