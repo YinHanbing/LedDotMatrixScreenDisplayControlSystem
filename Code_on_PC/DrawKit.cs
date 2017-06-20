@@ -66,6 +66,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         public static void Draw(PictureBox pictureBox, DotMatrix16 dotMatrix16)
         {
             InitCanvas(pictureBox, new DotMatrix16());
+            System.Threading.Thread.Sleep(10);
             Bitmap bitmap = new Bitmap(pictureBox.Image);
             Graphics graphics = Graphics.FromImage(bitmap);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;

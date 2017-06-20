@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC
@@ -9,12 +11,13 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
     {
         private SerialCommunications serialCommunications;
         private delegate void UpdateUI();
+        private string oldString = "";
         public static bool isFormMonitorShown;
 
         public FormMain()
         {
             InitializeComponent();
-            cbBaudRate.SelectedIndex = 2;
+            cbBaudRate.SelectedIndex = 1;
             serialCommunications = new SerialCommunications(serialPort, cbSerialPort, cbBaudRate);
             serialCommunications.ScanSerial();
             isFormMonitorShown = false;
@@ -28,7 +31,11 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-
+            DrawKit.DotMatrix16 = serialCommunications.ReceiveData();
+            if (FormMonitor.pbMonitor != null)
+            {
+                DrawKit.Draw(FormMonitor.pbMonitor, DrawKit.DotMatrix16); 
+            }
         }
 
         private void SerialPort_ErrorReceived(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)
@@ -66,8 +73,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void BtnSendText_Click(object sender, System.EventArgs e)
         {
-            if (tbTextInput.Text.Length != 0)
+            if (tbTextInput.Text.Length != 0 && !tbTextInput.Text.Equals(oldString))
             {
+                
                 DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
                 dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
                 for (int i = 0; i < tbTextInput.Text.Length; i++)
@@ -78,11 +86,12 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                     }
                 }
             }
+            oldString = tbTextInput.Text;
         }
 
         private void BtnMonitor_Click(object sender, System.EventArgs e)
         {
-            FormMonitor fm = new FormMonitor(serialPort, serialCommunications);
+            FormMonitor fm = new FormMonitor(serialCommunications);
             if (!isFormMonitorShown)
             {
                 fm.Show();
@@ -104,7 +113,19 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             g.FillRectangle(Brushes.White, new Rectangle() { X = 0, Y = 0, Height = 16, Width = 16 });
             for (int i = 0; i < str.Length; i++)
             {
-                g.DrawString(tbTextInput.Text.Substring(i, 1), tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(0), Y = Convert.ToSingle(2) });
+                string wordstring = tbTextInput.Text.Substring(i, 1);
+                if (Regex.IsMatch(wordstring, "[\u4e00-\u9fa5]"))
+                {
+                    g.DrawString(wordstring, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(0), Y = Convert.ToSingle(2) });
+                }
+                else if (Regex.IsMatch(wordstring, "[0-9]"))
+                {
+                    g.DrawString(wordstring, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(4), Y = Convert.ToSingle(2) });
+                }
+                else
+                {
+                    g.DrawString(wordstring, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(3), Y = Convert.ToSingle(0) });
+                }
                 stringTarget[i] = string.Join("", Enumerable.Range(0, 256).Select(a => new { x = a % 16, y = a / 16 })
                     .Select(x => bmp.GetPixel(x.x, x.y).GetBrightness() > 0.5f ? "0" : "1"));
                 Console.WriteLine(stringTarget[i]);
@@ -121,8 +142,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
 
             dotMatrix16s[0].PrintMatrix16();
-            DrawKit.DotMatrix16 = dotMatrix16s[0];
-            DrawKit.Draw(pbPicInput, DrawKit.DotMatrix16);
             return dotMatrix16s;
         }
 
