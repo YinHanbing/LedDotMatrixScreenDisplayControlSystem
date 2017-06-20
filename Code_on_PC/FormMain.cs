@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC
@@ -14,7 +16,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         public FormMain()
         {
             InitializeComponent();
-            cbBaudRate.SelectedIndex = 2;
+            cbBaudRate.SelectedIndex = 1;
             serialCommunications = new SerialCommunications(serialPort, cbSerialPort, cbBaudRate);
             serialCommunications.ScanSerial();
             isFormMonitorShown = false;
@@ -28,7 +30,8 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-
+            DrawKit.DotMatrix16 = serialCommunications.ReceiveData();
+            DrawKit.Draw(pbPicInput, DrawKit.DotMatrix16);
         }
 
         private void SerialPort_ErrorReceived(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)
@@ -104,7 +107,19 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             g.FillRectangle(Brushes.White, new Rectangle() { X = 0, Y = 0, Height = 16, Width = 16 });
             for (int i = 0; i < str.Length; i++)
             {
-                g.DrawString(tbTextInput.Text.Substring(i, 1), tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(0), Y = Convert.ToSingle(2) });
+                string wordstring = tbTextInput.Text.Substring(i, 1);
+                if (Regex.IsMatch(wordstring, "[\u4e00-\u9fa5]"))
+                {
+                    g.DrawString(wordstring, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(0), Y = Convert.ToSingle(2) });
+                }
+                else if (Regex.IsMatch(wordstring, "[0-9]"))
+                {
+                    g.DrawString(wordstring, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(4), Y = Convert.ToSingle(2) });
+                }
+                else
+                {
+                    g.DrawString(wordstring, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(3), Y = Convert.ToSingle(0) });
+                }
                 stringTarget[i] = string.Join("", Enumerable.Range(0, 256).Select(a => new { x = a % 16, y = a / 16 })
                     .Select(x => bmp.GetPixel(x.x, x.y).GetBrightness() > 0.5f ? "0" : "1"));
                 Console.WriteLine(stringTarget[i]);
@@ -121,8 +136,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
 
             dotMatrix16s[0].PrintMatrix16();
-            DrawKit.DotMatrix16 = dotMatrix16s[0];
-            DrawKit.Draw(pbPicInput, DrawKit.DotMatrix16);
             return dotMatrix16s;
         }
 

@@ -25,23 +25,23 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             if (data != null && serialPort.IsOpen)
             {
                 serialPort.Write(data.DotMatrix, 0, 32);
-                System.Console.WriteLine("SendSuccess");
+                System.Console.WriteLine("Sent");
             }
         }
 
         public DotMatrix16 ReceiveData()
         {
-            DotMatrix16 dotMatrix16 = null;
-            byte[] m_recvBytes = new byte[serialPort.BytesToRead];//定义缓冲区大小
-            for (int i = 0; i < 32; i++)
+            DotMatrix16 dotMatrix16 = new DotMatrix16();
+            if (serialPort.IsOpen)
             {
-                System.Threading.Thread.Sleep(100);
+                byte[] m_recvBytes = new byte[32];//定义缓冲区大小
                 int result = serialPort.Read(m_recvBytes, 0, m_recvBytes.Length);//从串口读取数据 
+                serialPort.DiscardInBuffer();
+                dotMatrix16.DotMatrix = m_recvBytes;
             }
-            serialPort.DiscardInBuffer();
-            dotMatrix16.DotMatrix = m_recvBytes;
 
-            System.Console.WriteLine(dotMatrix16.DotMatrix);
+            System.Console.WriteLine("Received");
+            dotMatrix16.PrintMatrix16();
 
             return dotMatrix16;
         }
