@@ -28,27 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.pbMonitor = new System.Windows.Forms.PictureBox();
-            this.serialPort = new System.IO.Ports.SerialPort(this.components);
+            FormMonitor.pbMonitor = new System.Windows.Forms.PictureBox();
             this.btnUpdate = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pbMonitor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(FormMonitor.pbMonitor)).BeginInit();
             this.SuspendLayout();
             // 
             // pbMonitor
             // 
-            this.pbMonitor.Location = new System.Drawing.Point(12, 12);
-            this.pbMonitor.Name = "pbMonitor";
-            this.pbMonitor.Size = new System.Drawing.Size(257, 257);
-            this.pbMonitor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbMonitor.TabIndex = 0;
-            this.pbMonitor.TabStop = false;
-            // 
-            // serialPort
-            // 
-            this.serialPort.ErrorReceived += new System.IO.Ports.SerialErrorReceivedEventHandler(this.SerialPort_ErrorReceived);
-            this.serialPort.PinChanged += new System.IO.Ports.SerialPinChangedEventHandler(this.SerialPort_PinChanged);
-            this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort_DataReceived);
+            FormMonitor.pbMonitor.Location = new System.Drawing.Point(12, 12);
+            FormMonitor.pbMonitor.Name = "pbMonitor";
+            FormMonitor.pbMonitor.Size = new System.Drawing.Size(257, 257);
+            FormMonitor.pbMonitor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            FormMonitor.pbMonitor.TabIndex = 0;
+            FormMonitor.pbMonitor.TabStop = false;
             // 
             // btnUpdate
             // 
@@ -66,7 +58,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 305);
             this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.pbMonitor);
+            this.Controls.Add(FormMonitor.pbMonitor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormMonitor";
@@ -75,15 +67,14 @@
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMonitor_FormClosed);
             this.Load += new System.EventHandler(this.FormMonitor_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pbMonitor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(FormMonitor.pbMonitor)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pbMonitor;
-        private System.IO.Ports.SerialPort serialPort;
+        public static System.Windows.Forms.PictureBox pbMonitor;
         private System.Windows.Forms.Button btnUpdate;
     }
 }

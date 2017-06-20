@@ -11,6 +11,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
     {
         private SerialCommunications serialCommunications;
         private delegate void UpdateUI();
+        private string oldString = "";
         public static bool isFormMonitorShown;
 
         public FormMain()
@@ -31,7 +32,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             DrawKit.DotMatrix16 = serialCommunications.ReceiveData();
-            DrawKit.Draw(pbPicInput, DrawKit.DotMatrix16);
+            if (FormMonitor.pbMonitor != null)
+            {
+                DrawKit.Draw(FormMonitor.pbMonitor, DrawKit.DotMatrix16); 
+            }
         }
 
         private void SerialPort_ErrorReceived(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)
@@ -69,8 +73,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void BtnSendText_Click(object sender, System.EventArgs e)
         {
-            if (tbTextInput.Text.Length != 0)
+            if (tbTextInput.Text.Length != 0 && !tbTextInput.Text.Equals(oldString))
             {
+                
                 DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
                 dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
                 for (int i = 0; i < tbTextInput.Text.Length; i++)
@@ -81,11 +86,12 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                     }
                 }
             }
+            oldString = tbTextInput.Text;
         }
 
         private void BtnMonitor_Click(object sender, System.EventArgs e)
         {
-            FormMonitor fm = new FormMonitor(serialPort, serialCommunications);
+            FormMonitor fm = new FormMonitor(serialCommunications);
             if (!isFormMonitorShown)
             {
                 fm.Show();
