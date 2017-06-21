@@ -35,7 +35,8 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             0x10,0x04,0x20,0x02,0xFE,0x3F,0x20,0x02,0x24,0x12,0x28,0x0A,0xFF,0x7F,0x00,0x00,
 0xF8,0x0F,0x08,0x08,0x08,0x08,0xF8,0x0F,0x08,0x08,0x08,0x08,0xF8,0x0F,0x08,0x08,
             };
-            DrawKit.Draw(pbPicInput, d);
+            dotMatrix16_Send = d.ExchangeCode();
+            DrawKit.Draw(pbPicInput, dotMatrix16_Send);
         }
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -43,7 +44,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             dotMatrix16_Receive = serialCommunications.ReceiveData();
             if (isFormMonitorShown && FormMonitor.pbMonitor != null)
             {
-                DrawKit.Draw(FormMonitor.pbMonitor, dotMatrix16_Receive);
+                DrawKit.Draw(FormMonitor.pbMonitor, dotMatrix16_Receive.ExchangeCode());
             }
         }
 
@@ -91,7 +92,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 {
                     if (dotMatrix16s.Length != 0)
                     {
-                        serialCommunications.SendData(dotMatrix16s[i]);
+                        serialCommunications.SendData(dotMatrix16s[i].ExchangeCode());
                     }
                 }
                 dotMatrix16_Send = dotMatrix16s[0];
@@ -201,7 +202,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void BtnSendPic_Click(object sender, System.EventArgs e)
         {
-            serialCommunications.SendData(dotMatrix16_Send);
+            serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
         }
     }
 }

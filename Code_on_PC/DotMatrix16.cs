@@ -1,4 +1,6 @@
-﻿namespace LedDotMatrixScreenDisplayControlSystemOnPC
+﻿using System;
+
+namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
     public class DotMatrix16
     {
@@ -49,7 +51,7 @@
                 }
 
                 // 打印矩阵
-                PrintMatrix16(); 
+                PrintMatrix16();
             }
         }
 
@@ -93,9 +95,19 @@
             return false;
         }
 
-        public DotMatrix16 ExchangeCode(DotMatrix16 dotMatrix16)
+        public DotMatrix16 ExchangeCode()
         {
             DotMatrix16 newDotMatrix16 = new DotMatrix16();
+
+            for (int i = 0; i < 32; i++)
+            {
+                int intbyte = 0;
+                for (int j = 7; j >= 0; j--)
+                {
+                    intbyte += Convert.ToInt16((DotMatrix[i] >> j) & 0x01) * (int)Math.Pow(2, 7 - j);
+                }
+                newDotMatrix16.DotMatrix[i] = Convert.ToByte(intbyte);
+            }
 
             return newDotMatrix16;
         }
