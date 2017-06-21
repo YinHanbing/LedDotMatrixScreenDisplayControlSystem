@@ -11,7 +11,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
     {
         private SerialCommunications serialCommunications;
         private delegate void UpdateUI();
-        private string oldString = "";
         private DotMatrix16 dotMatrix16_Send;
         public static bool isFormMonitorShown;
         public static DotMatrix16 dotMatrix16_Receive;
@@ -30,6 +29,13 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private void FormMain_Load(object sender, System.EventArgs e)
         {
             DrawKit.InitCanvas(pbPicInput, dotMatrix16_Send);
+            DotMatrix16 d = new DotMatrix16();
+            d.DotMatrix = new byte[32]
+            {
+            0x10,0x04,0x20,0x02,0xFE,0x3F,0x20,0x02,0x24,0x12,0x28,0x0A,0xFF,0x7F,0x00,0x00,
+0xF8,0x0F,0x08,0x08,0x08,0x08,0xF8,0x0F,0x08,0x08,0x08,0x08,0xF8,0x0F,0x08,0x08,
+            };
+            DrawKit.Draw(pbPicInput, d);
         }
 
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -76,7 +82,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void BtnSendText_Click(object sender, System.EventArgs e)
         {
-            if (tbTextInput.Text.Length != 0 && !tbTextInput.Text.Equals(oldString))
+            if (tbTextInput.Text.Length != 0)
             {
 
                 DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
@@ -92,7 +98,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 dotMatrix16_Send.PrintMatrix16();
                 DrawKit.Draw(pbPicInput, dotMatrix16_Send);
             }
-            oldString = tbTextInput.Text;
         }
 
         private void BtnMonitor_Click(object sender, System.EventArgs e)
