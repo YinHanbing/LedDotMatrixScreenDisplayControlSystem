@@ -35,7 +35,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             dotMatrix16_Receive = serialCommunications.ReceiveData();
-            if (FormMonitor.pbMonitor != null)
+            if (isFormMonitorShown && FormMonitor.pbMonitor != null)
             {
                 DrawKit.Draw(FormMonitor.pbMonitor, dotMatrix16_Receive);
             }
