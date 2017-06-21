@@ -92,5 +92,12 @@
             }
             return false;
         }
+
+        public DotMatrix16 ExchangeCode(DotMatrix16 dotMatrix16)
+        {
+            DotMatrix16 newDotMatrix16 = new DotMatrix16();
+
+            return newDotMatrix16;
+        }
     }
 }

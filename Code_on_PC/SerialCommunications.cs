@@ -126,7 +126,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 {
                     if (serialPort.PortName.Contains("COM"))
                     {
-                        serialPort.Open();
+                        if (!serialPort.IsOpen)
+                        {
+                            serialPort.Open(); 
+                        }
                     }
                 }).Start();
                 System.Console.WriteLine("opened");
