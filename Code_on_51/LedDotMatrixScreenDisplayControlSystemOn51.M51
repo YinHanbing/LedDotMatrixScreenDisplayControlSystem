@@ -1,0 +1,335 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        06/21/2017  22:55:57  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\SOFTWARES\KEIL\C51\BIN\BL51.EXE main.obj TO LedDotMatrixScreenDisplayControlSystemOn51
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C?PLDPTR)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C?PLDIDATA)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C?PLDXDATA)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C?PLDPDATA)
+  D:\SOFTWARES\KEIL\C51\LIB\C51S.LIB (?C?PLDCODE)
+
+
+LINK MAP OF MODULE:  LedDotMatrixScreenDisplayControlSystemOn51 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0056H     UNIT         ?DT?MAIN
+            DATA    005EH     000EH     UNIT         _DATA_GROUP_
+            IDATA   006CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001BH     UNIT         ?C_INITSEG
+                    001EH     0005H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     00E0H     UNIT         ?CO?MAIN
+            CODE    0106H     00B6H     UNIT         ?PR?_SCROLLSHOW?MAIN
+            CODE    01BCH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0248H     0074H     UNIT         ?C?LIB_CODE
+            CODE    02BCH     006EH     UNIT         ?PR?_HC595SENDDATA?MAIN
+            CODE    032AH     0063H     UNIT         ?PR?_SHOW?MAIN
+            CODE    038DH     0061H     UNIT         ?PR?USART?MAIN
+            CODE    03EEH     0023H     UNIT         ?PR?MAIN?MAIN
+            CODE    0411H     0022H     UNIT         ?PR?_SENDDATA?MAIN
+            CODE    0433H     0016H     UNIT         ?PR?USARTINIT?MAIN
+            CODE    0449H     0009H     UNIT         ?PR?INIT?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   LedDotMatrixScreenDisplayControlSystemOn51 (MAIN)
+
+
+SEGMENT                           DATA_GROUP 
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?PR?USART?MAIN                  -----    -----
+  +--> ?PR?_SENDDATA?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/21/2017  22:55:57  PAGE 2
+
+
+
+?PR?_SENDDATA?MAIN              005EH    0003H
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP                   -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                   -----    -----
+  +--> ?PR?INIT?MAIN
+  +--> ?PR?_SCROLLSHOW?MAIN
+  +--> ?PR?_SHOW?MAIN
+
+?PR?INIT?MAIN                   -----    -----
+  +--> ?PR?USARTINIT?MAIN
+
+?PR?_SCROLLSHOW?MAIN            0061H    0007H
+  +--> ?CO?MAIN
+  +--> ?PR?_HC595SENDDATA?MAIN
+
+?PR?_HC595SENDDATA?MAIN         0068H    0004H
+
+?PR?_SHOW?MAIN                  0061H    0004H
+  +--> ?CO?MAIN
+  +--> ?PR?_HC595SENDDATA?MAIN
+
+?C_INITSEG                      -----    -----
+  +--> ?CO?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  LedDotMatrixScreenDisplayControlSystemOn51 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  C:0411H         PUBLIC        _SendData
+  B:00B0H.4       PUBLIC        MOSIO
+  D:0008H         PUBLIC        bufferCount
+  B:00B0H.5       PUBLIC        R_CLK
+  B:00B0H.6       PUBLIC        S_CLK
+  C:038DH         PUBLIC        Usart
+  C:0449H         PUBLIC        Init
+  C:0106H         PUBLIC        _ScrollShow
+  B:00A8H.4       PUBLIC        ES
+  B:0098H.0       PUBLIC        RI
+  D:0009H         PUBLIC        flag
+  B:0098H.1       PUBLIC        TI
+  C:032AH         PUBLIC        _Show
+  C:03EEH         PUBLIC        main
+  C:0433H         PUBLIC        UsartInit
+  D:0099H         PUBLIC        SBUF
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/21/2017  22:55:57  PAGE 3
+
+
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  C:02BCH         PUBLIC        _HC595SendData
+  D:000AH         PUBLIC        FLAG_SHOW
+  D:000BH         PUBLIC        buffered
+  D:002BH         PUBLIC        FLAG_SCROLL
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  C:0026H         PUBLIC        tab0
+  C:0046H         PUBLIC        tab1
+  C:0066H         PUBLIC        tab2
+  C:0086H         PUBLIC        tab3
+  C:00A6H         PUBLIC        tab4
+  C:00C6H         PUBLIC        tab5
+  C:00E6H         PUBLIC        tab6
+  D:002CH         PUBLIC        p
+  D:003EH         PUBLIC        buffer
+  -------         PROC          _HC595SENDDATA
+  D:0007H         SYMBOL        BT3
+  D:0005H         SYMBOL        BT2
+  D:0003H         SYMBOL        BT1
+  D:006BH         SYMBOL        BT0
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:02BCH         LINE#         37
+  C:02BCH         LINE#         38
+  C:02BCH         LINE#         42
+  C:02BEH         LINE#         43
+  C:02BEH         LINE#         44
+  C:02C9H         LINE#         45
+  C:02CDH         LINE#         47
+  C:02CFH         LINE#         48
+  C:02D1H         LINE#         49
+  C:02D5H         LINE#         52
+  C:02D7H         LINE#         53
+  C:02D7H         LINE#         54
+  C:02E2H         LINE#         55
+  C:02E6H         LINE#         57
+  C:02E8H         LINE#         58
+  C:02EAH         LINE#         59
+  C:02EEH         LINE#         62
+  C:02F0H         LINE#         63
+  C:02F0H         LINE#         64
+  C:02FBH         LINE#         65
+  C:02FFH         LINE#         66
+  C:0301H         LINE#         67
+  C:0303H         LINE#         68
+  C:0307H         LINE#         71
+  C:0309H         LINE#         72
+  C:0309H         LINE#         73
+  C:0315H         LINE#         74
+  C:031BH         LINE#         75
+  C:031DH         LINE#         76
+  C:031FH         LINE#         77
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/21/2017  22:55:57  PAGE 4
+
+
+  C:0323H         LINE#         80
+  C:0325H         LINE#         81
+  C:0327H         LINE#         82
+  C:0329H         LINE#         83
+  -------         ENDPROC       _HC595SENDDATA
+  -------         PROC          USARTINIT
+  C:0433H         LINE#         91
+  C:0433H         LINE#         92
+  C:0433H         LINE#         93
+  C:0436H         LINE#         94
+  C:0439H         LINE#         95
+  C:043CH         LINE#         96
+  C:043FH         LINE#         97
+  C:0442H         LINE#         98
+  C:0444H         LINE#         99
+  C:0446H         LINE#         100
+  C:0448H         LINE#         101
+  -------         ENDPROC       USARTINIT
+  -------         PROC          _SCROLLSHOW
+  D:0061H         SYMBOL        p
+  -------         DO            
+  D:0064H         SYMBOL        j
+  D:0066H         SYMBOL        k
+  D:0067H         SYMBOL        ms
+  -------         ENDDO         
+  C:0106H         LINE#         103
+  C:010CH         LINE#         104
+  C:010CH         LINE#         108
+  C:010FH         LINE#         109
+  C:010FH         LINE#         110
+  C:0112H         LINE#         111
+  C:0112H         LINE#         112
+  C:0189H         LINE#         113
+  C:0192H         LINE#         116
+  C:019DH         LINE#         117
+  C:01A9H         LINE#         119
+  C:01B1H         LINE#         120
+  C:01B7H         LINE#         121
+  C:01B7H         LINE#         122
+  C:01BBH         LINE#         123
+  C:01BBH         LINE#         124
+  -------         ENDPROC       _SCROLLSHOW
+  -------         PROC          _SHOW
+  D:0061H         SYMBOL        p
+  -------         DO            
+  D:0064H         SYMBOL        k
+  -------         ENDDO         
+  C:032AH         LINE#         126
+  C:0330H         LINE#         127
+  C:0330H         LINE#         130
+  C:0333H         LINE#         131
+  C:0333H         LINE#         133
+  C:0383H         LINE#         135
+  C:038CH         LINE#         136
+  -------         ENDPROC       _SHOW
+  -------         PROC          _SENDDATA
+  D:005EH         SYMBOL        ch
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/21/2017  22:55:57  PAGE 5
+
+
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0411H         LINE#         138
+  C:0417H         LINE#         139
+  C:0417H         LINE#         141
+  C:0419H         LINE#         142
+  C:0419H         LINE#         143
+  C:0429H         LINE#         144
+  C:042CH         LINE#         145
+  C:042CH         LINE#         146
+  C:042CH         LINE#         147
+  C:042EH         LINE#         148
+  C:0432H         LINE#         149
+  -------         ENDPROC       _SENDDATA
+  -------         PROC          USART
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:038DH         LINE#         157
+  C:03A4H         LINE#         160
+  C:03A7H         LINE#         161
+  C:03A7H         LINE#         162
+  C:03B1H         LINE#         164
+  C:03B7H         LINE#         165
+  C:03B7H         LINE#         166
+  C:03B8H         LINE#         167
+  C:03B8H         LINE#         168
+  C:03C4H         LINE#         169
+  C:03C8H         LINE#         170
+  C:03CBH         LINE#         171
+  C:03D4H         LINE#         172
+  C:03D7H         LINE#         173
+  C:03D7H         LINE#         175
+  C:03D9H         LINE#         176
+  C:03D9H         LINE#         177
+  -------         ENDPROC       USART
+  -------         PROC          INIT
+  C:0449H         LINE#         186
+  C:0449H         LINE#         187
+  C:0449H         LINE#         188
+  C:044CH         LINE#         189
+  C:044FH         LINE#         190
+  -------         ENDPROC       INIT
+  -------         PROC          MAIN
+  C:03EEH         LINE#         193
+  C:03EEH         LINE#         194
+  C:03EEH         LINE#         195
+  C:03F1H         LINE#         197
+  C:03F1H         LINE#         198
+  C:03F1H         LINE#         199
+  C:03F6H         LINE#         200
+  C:03F6H         LINE#         201
+  C:03FFH         LINE#         202
+  C:0401H         LINE#         203
+  C:0406H         LINE#         204
+  C:0406H         LINE#         205
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/21/2017  22:55:57  PAGE 6
+
+
+  C:040FH         LINE#         206
+  C:040FH         LINE#         207
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0248H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?PLDPTR
+  C:0275H         PUBLIC        ?C?PLDPTR
+  -------         ENDMOD        ?C?PLDPTR
+
+  -------         MODULE        ?C?PLDIDATA
+  C:0295H         PUBLIC        ?C?PLDIDATA
+  -------         ENDMOD        ?C?PLDIDATA
+
+  -------         MODULE        ?C?PLDXDATA
+  C:029EH         PUBLIC        ?C?PLDXDATA
+  -------         ENDMOD        ?C?PLDXDATA
+
+  -------         MODULE        ?C?PLDPDATA
+  C:02A7H         PUBLIC        ?C?PLDPDATA
+  -------         ENDMOD        ?C?PLDPDATA
+
+  -------         MODULE        ?C?PLDCODE
+  C:02B0H         PUBLIC        ?C?PLDCODE
+  -------         ENDMOD        ?C?PLDCODE
+
+Program Size: data=109.0 xdata=0 code=1101
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
