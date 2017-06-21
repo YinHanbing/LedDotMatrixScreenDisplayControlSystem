@@ -19,7 +19,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void FormMonitor_Load(object sender, System.EventArgs e)
         {
-            DrawKit.Draw(FormMonitor.pbMonitor, FormMain.dotMatrix16_Receive);
+            DrawKit.Draw(FormMonitor.pbMonitor, FormMain.dotMatrix16_Receive.ExchangeCode());
         }
 
         private void BtnUpdate_Click(object sender, System.EventArgs e)
