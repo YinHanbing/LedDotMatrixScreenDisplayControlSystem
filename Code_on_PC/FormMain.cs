@@ -88,6 +88,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                         serialCommunications.SendData(dotMatrix16s[i]);
                     }
                 }
+                dotMatrix16_Send = dotMatrix16s[0];
+                dotMatrix16_Send.PrintMatrix16();
+                DrawKit.Draw(pbPicInput, dotMatrix16_Send);
             }
             oldString = tbTextInput.Text;
         }
@@ -144,7 +147,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 }
             }
 
-            dotMatrix16s[0].PrintMatrix16();
             return dotMatrix16s;
         }
 
@@ -182,7 +184,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
         }
 
-        private void BtnClean_Click(object sender, System.EventArgs e)
+        private void BtnCleanPic_Click(object sender, System.EventArgs e)
         {
             DrawKit.InitCanvas(pbPicInput, dotMatrix16_Send);
         }
