@@ -181,7 +181,7 @@
             this.btnCleanPic.TabIndex = 8;
             this.btnCleanPic.Text = "清除图案";
             this.btnCleanPic.UseVisualStyleBackColor = true;
-            this.btnCleanPic.Click += new System.EventHandler(this.BtnClean_Click);
+            this.btnCleanPic.Click += new System.EventHandler(this.BtnCleanPic_Click);
             // 
             // btnCleanText
             // 

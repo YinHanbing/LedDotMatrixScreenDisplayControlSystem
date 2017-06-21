@@ -1,13 +1,10 @@
-﻿using System.IO.Ports;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
     public partial class FormMonitor : Form
     {
         private SerialCommunications serialCommunications;
-
-        private delegate void UpdateUI();
 
         public FormMonitor(SerialCommunications serialCommunications)
         {
@@ -22,8 +19,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void FormMonitor_Load(object sender, System.EventArgs e)
         {
-            DrawKit.InitCanvas(pbMonitor,new DotMatrix16());
-            DrawKit.Draw(FormMonitor.pbMonitor, DrawKit.DotMatrix16);
+            DrawKit.Draw(FormMonitor.pbMonitor, FormMain.dotMatrix16_Receive);
         }
 
         private void BtnUpdate_Click(object sender, System.EventArgs e)

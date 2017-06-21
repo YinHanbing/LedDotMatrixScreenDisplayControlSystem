@@ -5,12 +5,8 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 {
     class DrawKit
     {
-        private static DotMatrix16 dotMatrix16;
-
         public const string FLAG_DRAW = "DRAW";
         public const string FLAG_ERASE = "ERASE";
-
-        public static DotMatrix16 DotMatrix16 { get => dotMatrix16; set => dotMatrix16 = value; }
 
         /// <summary>
         /// 初始化画布
