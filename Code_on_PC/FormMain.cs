@@ -88,12 +88,16 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
                 DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
                 dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
-                for (int i = 0; i < tbTextInput.Text.Length; i++)
+                //for (int i = 0; i < tbTextInput.Text.Length; i++)
+                //{
+                //    if (dotMatrix16s.Length != 0)
+                //    {
+                //        serialCommunications.SendData(dotMatrix16s[i].ExchangeCode());
+                //    }
+                //}
+                if (dotMatrix16s.Length != 0)
                 {
-                    if (dotMatrix16s.Length != 0)
-                    {
-                        serialCommunications.SendData(dotMatrix16s[i].ExchangeCode());
-                    }
+                    serialCommunications.SendData(dotMatrix16s[0].ExchangeCode());
                 }
                 dotMatrix16_Send = dotMatrix16s[0];
                 dotMatrix16_Send.PrintMatrix16();
@@ -202,6 +206,34 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void BtnSendPic_Click(object sender, System.EventArgs e)
         {
+            serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
+        }
+
+        private void BtnUpMove_Click(object sender, EventArgs e)
+        {
+            dotMatrix16_Send.UpMove();
+            DrawKit.Draw(pbPicInput, dotMatrix16_Send);
+            serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
+        }
+
+        private void BtnDownMove_Click(object sender, EventArgs e)
+        {
+            dotMatrix16_Send.DownMove();
+            DrawKit.Draw(pbPicInput, dotMatrix16_Send);
+            serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
+        }
+
+        private void BtnLeftMove_Click(object sender, EventArgs e)
+        {
+            dotMatrix16_Send.LeftMove();
+            DrawKit.Draw(pbPicInput, dotMatrix16_Send);
+            serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
+        }
+
+        private void BtnRightMove_Click(object sender, EventArgs e)
+        {
+            dotMatrix16_Send.RightMove();
+            DrawKit.Draw(pbPicInput, dotMatrix16_Send);
             serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
         }
     }

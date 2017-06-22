@@ -16,10 +16,11 @@ const uchar FLAG_SCROLL = 'l';
 const uchar FLAG_SHOW = 'w';
 
 //--定义变量--//
-uchar bufferCount;
-uchar buffer[32];
-uchar buffered[32];
-uchar flag;
+uchar bufferCount;  //缓存个数（一个是一个字节）
+uchar buffer[32];   //缓存区
+uchar buffered[32]; //缓存完成区
+uchar flag;			//显示方式标志位
+uchar num;			//滚动显示个数
 
 //--定义一个指针数据指向汉字--//
 uchar *p[] = {tab1, tab2, tab3, tab4, tab5, tab6};
@@ -100,7 +101,7 @@ void UsartInit()
 	TR1 = 1; //打开计数器
 }
 
-void ScrollShow(uchar *p[])
+void ScrollShow(uchar *p[], uchar num)
 {
 	uint j;
 	uchar k, ms;
@@ -117,7 +118,7 @@ void ScrollShow(uchar *p[])
 	}
 
 	j++;
-	if (j == (5 * 15))
+	if (j == ((num + 1) * 15))
 	{
 		j = 0;
 	}
@@ -148,6 +149,34 @@ void SendData(uchar ch[32])
 	}
 }
 
+void UpdateData(uchar buf)
+{
+	uchar i;
+	buffer[bufferCount++] = buf;
+	if (bufferCount == 32)
+	{
+		flag = FLAG_SHOW;
+		for (i = 0; i < 32; i++)
+		{
+			buffered[i] = buffer[i];
+			buffer[i] = 0;
+		}
+		SendData(buffered);
+		for (i = 0; i < 32; i++)
+		{
+			if (buffered[i] != 0xff)
+			{
+				break;
+			}
+			else
+			{
+				flag = FLAG_SCROLL;
+			}
+		}
+		bufferCount = 0;
+	}
+}
+
 /*******************************************************************************
 * 函数名         : Usart() interrupt 4
 * 函数功能		  : 串口通信中断函数
@@ -156,22 +185,11 @@ void SendData(uchar ch[32])
 *******************************************************************************/
 void Usart() interrupt 4
 {
-	uchar i;
+	uchar buffer;
 	if (RI)
 	{
-		buffer[bufferCount++] = SBUF; //接收到的数据
-
-		if (bufferCount == 32)
-		{
-			for (i = 0; i < 32; i++)
-			{
-				buffered[i] = buffer[i];
-			}
-			flag = FLAG_SHOW;
-			SendData(buffered);
-			bufferCount = 0;
-		}
-
+		buffer = SBUF; //接收到的数据
+		UpdateData(buffer);
 		RI = 0; //清除接收中断标志位
 	}
 }
@@ -187,6 +205,7 @@ void Init()
 {
 	bufferCount = 0;	//缓存个数初始化
 	flag = FLAG_SCROLL; //标志初始化
+	num = 4;			//初始化滚动显示个数
 	UsartInit();		//串口初始化
 }
 
@@ -198,7 +217,7 @@ void main(void)
 	{
 		if (flag == FLAG_SCROLL)
 		{
-			ScrollShow(p);
+			ScrollShow(p, num);
 		}
 		else if (flag == FLAG_SHOW)
 		{

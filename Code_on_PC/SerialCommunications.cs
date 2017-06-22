@@ -108,10 +108,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
         }
 
-        public void SendUpdate()
-        {
-        }
-
         public void OpenSerial()
         {
             if (!serialPort.IsOpen && SerialPort.GetPortNames().Length != 0)
