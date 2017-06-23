@@ -4,7 +4,8 @@ LedDotMatrixScreenDisplayControlSystem with MCU and PC
 
 ## MCU
 * MCU model: STC90C51
-* Baud rate: 11.0592MHz
+* Crystal Oscillator: 11.0592MHz
+* Baud rate: 57600
 * IDE: Keil uvision4
 * Language: C
 * Dot matrix: 16 * 16
