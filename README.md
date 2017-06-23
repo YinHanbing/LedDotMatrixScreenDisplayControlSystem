@@ -1,8 +1,8 @@
 # LedDotMatrixScreenDisplayControlSystem
 
-LedDotMatrixScreenDisplayControlSystem with 51 and PC
+LedDotMatrixScreenDisplayControlSystem with MCU and PC
 
-## 51
+## MCU
 * MCU model: STC90C51
 * Baud rate: 11.0592MHz
 * IDE: Keil uvision4
