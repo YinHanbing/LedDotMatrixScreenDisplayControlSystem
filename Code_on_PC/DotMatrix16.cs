@@ -111,5 +111,51 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
             return newDotMatrix16;
         }
+
+        public void UpMove()
+        {
+            byte byte0 = DotMatrix[0];
+            byte byte1 = DotMatrix[1];
+            for (int i = 0; i < 30; i++)
+            {
+                DotMatrix[i] = DotMatrix[i + 2];
+            }
+            DotMatrix[30] = byte0;
+            DotMatrix[31] = byte1;
+        }
+
+        public void DownMove()
+        {
+            byte byte30 = DotMatrix[30];
+            byte byte31 = DotMatrix[31];
+            for (int i = 31; i >= 2; i--)
+            {
+                DotMatrix[i] = DotMatrix[i - 2];
+            }
+            DotMatrix[0] = byte30;
+            DotMatrix[1] = byte31;
+        }
+
+        public void LeftMove()
+        {
+            for (int i = 0; i < 32; i += 2)
+            {
+                int head1 = DotMatrix[i] >> 7;
+                int head2 = DotMatrix[i + 1] >> 7;
+                DotMatrix[i] = (byte)((DotMatrix[i] << 1) + head2);
+                DotMatrix[i + 1] = (byte)((DotMatrix[i + 1] << 1) + head1);
+            }
+        }
+
+        public void RightMove()
+        {
+            for (int i = 0; i < 32; i += 2)
+            {
+                int tail1 = DotMatrix[i] & 0x01;
+                int tail2 = DotMatrix[i + 1] & 0x01;
+                DotMatrix[i] = (byte)((DotMatrix[i] >> 1) + tail2 * Math.Pow(2, 7));
+                DotMatrix[i + 1] = (byte)((DotMatrix[i + 1] >> 1) + tail1 * Math.Pow(2, 7));
+            }
+        }
     }
 }

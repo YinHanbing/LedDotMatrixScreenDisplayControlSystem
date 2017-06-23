@@ -44,7 +44,15 @@
             this.btnMonitor = new System.Windows.Forms.Button();
             this.btnCleanPic = new System.Windows.Forms.Button();
             this.btnCleanText = new System.Windows.Forms.Button();
+            this.btnUpMove = new System.Windows.Forms.Button();
+            this.btnDownMove = new System.Windows.Forms.Button();
+            this.btnLeftMove = new System.Windows.Forms.Button();
+            this.btnRightMove = new System.Windows.Forms.Button();
+            this.timerSpeed = new System.Windows.Forms.Timer(this.components);
+            this.nUDSpeed = new System.Windows.Forms.NumericUpDown();
+            this.toolTipSpeed = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbPicInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // serialPort
@@ -75,6 +83,7 @@
             // tbTextInput
             // 
             this.tbTextInput.Location = new System.Drawing.Point(20, 95);
+            this.tbTextInput.MaxLength = 500;
             this.tbTextInput.Multiline = true;
             this.tbTextInput.Name = "tbTextInput";
             this.tbTextInput.Size = new System.Drawing.Size(257, 257);
@@ -124,6 +133,8 @@
             // 
             this.cbBaudRate.FormattingEnabled = true;
             this.cbBaudRate.Items.AddRange(new object[] {
+            "115200",
+            "57600",
             "19200",
             "9600",
             "4800",
@@ -193,11 +204,76 @@
             this.btnCleanText.UseVisualStyleBackColor = true;
             this.btnCleanText.Click += new System.EventHandler(this.BtnCleanText_Click);
             // 
+            // btnUpMove
+            // 
+            this.btnUpMove.Location = new System.Drawing.Point(283, 144);
+            this.btnUpMove.Name = "btnUpMove";
+            this.btnUpMove.Size = new System.Drawing.Size(30, 23);
+            this.btnUpMove.TabIndex = 13;
+            this.btnUpMove.Text = "↑";
+            this.btnUpMove.UseVisualStyleBackColor = true;
+            this.btnUpMove.Click += new System.EventHandler(this.BtnUpMove_Click);
+            // 
+            // btnDownMove
+            // 
+            this.btnDownMove.Location = new System.Drawing.Point(283, 173);
+            this.btnDownMove.Name = "btnDownMove";
+            this.btnDownMove.Size = new System.Drawing.Size(30, 23);
+            this.btnDownMove.TabIndex = 14;
+            this.btnDownMove.Text = "↓";
+            this.btnDownMove.UseVisualStyleBackColor = true;
+            this.btnDownMove.Click += new System.EventHandler(this.BtnDownMove_Click);
+            // 
+            // btnLeftMove
+            // 
+            this.btnLeftMove.Location = new System.Drawing.Point(283, 202);
+            this.btnLeftMove.Name = "btnLeftMove";
+            this.btnLeftMove.Size = new System.Drawing.Size(30, 23);
+            this.btnLeftMove.TabIndex = 15;
+            this.btnLeftMove.Text = "←";
+            this.btnLeftMove.UseVisualStyleBackColor = true;
+            this.btnLeftMove.Click += new System.EventHandler(this.BtnLeftMove_Click);
+            // 
+            // btnRightMove
+            // 
+            this.btnRightMove.Location = new System.Drawing.Point(283, 231);
+            this.btnRightMove.Name = "btnRightMove";
+            this.btnRightMove.Size = new System.Drawing.Size(30, 23);
+            this.btnRightMove.TabIndex = 16;
+            this.btnRightMove.Text = "→";
+            this.btnRightMove.UseVisualStyleBackColor = true;
+            this.btnRightMove.Click += new System.EventHandler(this.BtnRightMove_Click);
+            // 
+            // timerSpeed
+            // 
+            this.timerSpeed.Interval = 300;
+            this.timerSpeed.Tick += new System.EventHandler(this.TimerSpeed_Tick);
+            // 
+            // nUDSpeed
+            // 
+            this.nUDSpeed.Location = new System.Drawing.Point(283, 260);
+            this.nUDSpeed.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.nUDSpeed.Name = "nUDSpeed";
+            this.nUDSpeed.ReadOnly = true;
+            this.nUDSpeed.Size = new System.Drawing.Size(29, 21);
+            this.nUDSpeed.TabIndex = 17;
+            this.toolTipSpeed.SetToolTip(this.nUDSpeed, "调速");
+            this.nUDSpeed.ValueChanged += new System.EventHandler(this.NUDSpeed_ValueChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(606, 410);
+            this.Controls.Add(this.nUDSpeed);
+            this.Controls.Add(this.btnRightMove);
+            this.Controls.Add(this.btnLeftMove);
+            this.Controls.Add(this.btnDownMove);
+            this.Controls.Add(this.btnUpMove);
             this.Controls.Add(this.btnCleanText);
             this.Controls.Add(this.btnCleanPic);
             this.Controls.Add(this.btnMonitor);
@@ -220,6 +296,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbPicInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,6 +318,13 @@
         private System.Windows.Forms.Button btnMonitor;
         private System.Windows.Forms.Button btnCleanPic;
         private System.Windows.Forms.Button btnCleanText;
+        private System.Windows.Forms.Button btnUpMove;
+        private System.Windows.Forms.Button btnDownMove;
+        private System.Windows.Forms.Button btnLeftMove;
+        private System.Windows.Forms.Button btnRightMove;
+        private System.Windows.Forms.Timer timerSpeed;
+        private System.Windows.Forms.NumericUpDown nUDSpeed;
+        private System.Windows.Forms.ToolTip toolTipSpeed;
     }
 }
 
