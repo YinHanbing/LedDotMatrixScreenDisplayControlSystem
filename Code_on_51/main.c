@@ -21,6 +21,7 @@ uchar buffer[32];   //缓存区
 uchar buffered[32]; //缓存完成区
 uchar flag;			//显示方式标志位
 uchar num;			//滚动显示个数
+bit OK;				//发送标志位
 
 //--定义一个指针数据指向汉字--//
 uchar *p[] = {tab1, tab2, tab3, tab4, tab5, tab6};
@@ -94,11 +95,24 @@ void UsartInit()
 	SCON = 0X50; //设置为工作方式1
 	TMOD = 0X20; //设置计数器工作方式2
 	PCON = 0X80; //波特率加倍
-	TH1 = 0XF3;  //计数器初始值设置，注意波特率是4800的
-	TL1 = 0XF3;
+	TH1 = 0XFF;  //计数器初始值设置，注意波特率是57600
+	TL1 = 0XFF;
 	ES = 1;  //打开接收中断
 	EA = 1;  //打开总中断
 	TR1 = 1; //打开计数器
+}
+
+void SendData(uchar *ch)
+{
+	uchar i;
+	for (i = 0; i < 32; i++)
+	{
+		SBUF = ch[i]; //将接收到的数据放入到发送寄存器
+		while (!TI)
+		{
+		}		//等待发送数据完成
+		TI = 0; //清除发送完成标志位
+	}
 }
 
 void ScrollShow(uchar *p[], uchar num)
@@ -116,6 +130,7 @@ void ScrollShow(uchar *p[], uchar num)
 		//--清屏--//
 		HC595SendData(0xff, 0xff, 0, 0); //清屏
 	}
+	SendData(p[0] + 2 * j);
 
 	j++;
 	if (j == ((num + 1) * 15))
@@ -131,22 +146,9 @@ void Show(uchar *p)
 	for (k = 0; k < 16; k++) //显示一个字
 	{
 		//--因为字模软件取的数组是高电平有效，所以列要取反--//
-		HC595SendData(~(*(p + 2 * k + 1)), ~(*(p + 2 * k)),
-					  tab0[2 * k], tab0[2 * k + 1]);
+		HC595SendData(~(*(p + 2 * k + 1)), ~(*(p + 2 * k)), tab0[2 * k], tab0[2 * k + 1]);
 	}
-}
-
-void SendData(uchar ch[32])
-{
-	uchar i;
-	for (i = 0; i < 32; i++)
-	{
-		SBUF = ch[i]; //将接收到的数据放入到发送寄存器
-		while (!TI)
-		{
-		}		//等待发送数据完成
-		TI = 0; //清除发送完成标志位
-	}
+	HC595SendData(0xff, 0xff, 0, 0); //清屏
 }
 
 void UpdateData(uchar buf)
@@ -161,18 +163,7 @@ void UpdateData(uchar buf)
 			buffered[i] = buffer[i];
 			buffer[i] = 0;
 		}
-		SendData(buffered);
-		for (i = 0; i < 32; i++)
-		{
-			if (buffered[i] != 0xff)
-			{
-				break;
-			}
-			else
-			{
-				flag = FLAG_SCROLL;
-			}
-		}
+		OK = 1;
 		bufferCount = 0;
 	}
 }
@@ -206,6 +197,7 @@ void Init()
 	bufferCount = 0;	//缓存个数初始化
 	flag = FLAG_SCROLL; //标志初始化
 	num = 4;			//初始化滚动显示个数
+	OK = 0;				//发送标志位初始化
 	UsartInit();		//串口初始化
 }
 
@@ -222,6 +214,11 @@ void main(void)
 		else if (flag == FLAG_SHOW)
 		{
 			Show(buffered);
+			if (OK)
+			{
+				SendData(buffered);
+				OK = 0;
+			}
 		}
 	}
 }

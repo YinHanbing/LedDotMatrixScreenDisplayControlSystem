@@ -12,13 +12,18 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         private SerialCommunications serialCommunications;
         private delegate void UpdateUI();
         private DotMatrix16 dotMatrix16_Send;
+        private byte[] textString;
+        private int textStringCount;
+        private int textStringShowCount;
+        private int oldNUDSpeed;
         public static bool isFormMonitorShown;
         public static DotMatrix16 dotMatrix16_Receive;
 
         public FormMain()
         {
             InitializeComponent();
-            cbBaudRate.SelectedIndex = 2;
+            cbBaudRate.SelectedIndex = 1;
+            oldNUDSpeed = (int)nUDSpeed.Value;
             serialCommunications = new SerialCommunications(serialPort, cbSerialPort, cbBaudRate);
             serialCommunications.ScanSerial();
             isFormMonitorShown = false;
@@ -85,23 +90,47 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             if (tbTextInput.Text.Length != 0)
             {
-
-                DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
-                dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
-                //for (int i = 0; i < tbTextInput.Text.Length; i++)
-                //{
-                //    if (dotMatrix16s.Length != 0)
-                //    {
-                //        serialCommunications.SendData(dotMatrix16s[i].ExchangeCode());
-                //    }
-                //}
-                if (dotMatrix16s.Length != 0)
+                if (tbTextInput.Text.Length == 1)
                 {
-                    serialCommunications.SendData(dotMatrix16s[0].ExchangeCode());
+                    timerSpeed.Stop();
+                    DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
+                    dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
+
+                    if (dotMatrix16s.Length != 0)
+                    {
+                        serialCommunications.SendData(dotMatrix16s[0].ExchangeCode());
+                    }
+                    dotMatrix16_Send = dotMatrix16s[0];
+                    dotMatrix16_Send.PrintMatrix16();
+                    DrawKit.Draw(pbPicInput, dotMatrix16_Send);
                 }
-                dotMatrix16_Send = dotMatrix16s[0];
-                dotMatrix16_Send.PrintMatrix16();
-                DrawKit.Draw(pbPicInput, dotMatrix16_Send);
+                else
+                {
+                    textStringCount = tbTextInput.Text.Length;
+                    DotMatrix16[] dotMatrix16s = new DotMatrix16[tbTextInput.Text.Length];
+                    dotMatrix16s = StringToDotMatrix16(tbTextInput.Text);
+                    dotMatrix16_Send = dotMatrix16s[0];
+                    DrawKit.Draw(pbPicInput, dotMatrix16_Send);
+                    textString = new byte[(textStringCount + 2) * 32];
+                    for (int i = 0; i < 32; i++)
+                    {
+                        textString[i] = 0;
+                    }
+                    for (int i = 0; i < textStringCount; i++)
+                    {
+                        for (int j = 0; j < 32; j++)
+                        {
+                            textString[(i + 1) * 32 + j] = dotMatrix16s[i].DotMatrix[j];
+                        }
+                    }
+                    for (int i = 0; i < 32; i++)
+                    {
+                        textString[(textStringCount + 1) * 32 + i] = 0;
+                    }
+
+                    textStringShowCount = 0;
+                    timerSpeed.Start();
+                } 
             }
         }
 
@@ -124,11 +153,11 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
         {
             DotMatrix16[] dotMatrix16s = new DotMatrix16[str.Length];
             string[] stringTarget = new string[str.Length];
-            Bitmap bmp = new Bitmap(16, 16);
-            Graphics g = Graphics.FromImage(bmp);
-            g.FillRectangle(Brushes.White, new Rectangle() { X = 0, Y = 0, Height = 16, Width = 16 });
             for (int i = 0; i < str.Length; i++)
             {
+                Bitmap bmp = new Bitmap(16, 16);
+                Graphics g = Graphics.FromImage(bmp);
+                g.FillRectangle(Brushes.White, new Rectangle() { X = 0, Y = 0, Height = 16, Width = 16 });
                 string wordstring = tbTextInput.Text.Substring(i, 1);
                 if (Regex.IsMatch(wordstring, "[\u4e00-\u9fa5]"))
                 {
@@ -142,6 +171,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                 {
                     g.DrawString(wordstring, tbTextInput.Font, Brushes.Black, new PointF() { X = Convert.ToSingle(3), Y = Convert.ToSingle(0) });
                 }
+
                 stringTarget[i] = string.Join("", Enumerable.Range(0, 256).Select(a => new { x = a % 16, y = a / 16 })
                     .Select(x => bmp.GetPixel(x.x, x.y).GetBrightness() > 0.5f ? "0" : "1"));
                 Console.WriteLine(stringTarget[i]);
@@ -155,6 +185,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                     }
                     dotMatrix16s[i].DotMatrix[j] = Convert.ToByte(intbyte);
                 }
+                dotMatrix16s[i].PrintMatrix16();
             }
 
             return dotMatrix16s;
@@ -206,6 +237,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
 
         private void BtnSendPic_Click(object sender, System.EventArgs e)
         {
+            timerSpeed.Stop();
             serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
         }
 
@@ -235,6 +267,37 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             dotMatrix16_Send.RightMove();
             DrawKit.Draw(pbPicInput, dotMatrix16_Send);
             serialCommunications.SendData(dotMatrix16_Send.ExchangeCode());
+        }
+
+        private void TimerSpeed_Tick(object sender, EventArgs e)
+        {
+            if (textStringShowCount < (textStringCount + 1) * 32)
+            {
+                DotMatrix16 dotMatrix16 = new DotMatrix16();
+                for (int i = 0; i < 32; i++)
+                {
+                    dotMatrix16.DotMatrix[i] = textString[i + textStringShowCount];
+                }
+                serialCommunications.SendData(dotMatrix16.ExchangeCode());
+                textStringShowCount += 2;
+            }
+            else
+            {
+                textStringShowCount = 0;
+            }
+        }
+
+        private void NUDSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            if (nUDSpeed.Value > oldNUDSpeed)
+            {
+                timerSpeed.Interval = timerSpeed.Interval - 20;
+            }
+            else
+            {
+                timerSpeed.Interval = timerSpeed.Interval + 20;
+            }
+            oldNUDSpeed = (int)nUDSpeed.Value;
         }
     }
 }

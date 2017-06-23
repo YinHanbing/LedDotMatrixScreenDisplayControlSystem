@@ -35,9 +35,29 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             if (serialPort.IsOpen)
             {
                 byte[] m_recvBytes = new byte[32];//定义缓冲区大小
-                int result = serialPort.Read(m_recvBytes, 0, m_recvBytes.Length);//从串口读取数据 
-                serialPort.DiscardInBuffer();
-                dotMatrix16.DotMatrix = m_recvBytes;
+                try
+                {
+                    int result = serialPort.Read(m_recvBytes, 0, m_recvBytes.Length);//从串口读取数据 
+                    System.Console.WriteLine(result);
+                    if (result == 32)
+                    {
+                        dotMatrix16.DotMatrix = m_recvBytes;
+                    }
+                    else if (result == 31)
+                    {
+                        dotMatrix16.DotMatrix[0] = 0;
+                        for (int i = 0; i < 31; i++)
+                        {
+                            dotMatrix16.DotMatrix[i + 1] = m_recvBytes[i];
+                        }
+                    }
+
+                }
+                catch (System.Exception)
+                {
+                    System.Console.WriteLine("IO Error");
+                    serialPort.DiscardInBuffer();
+                }
             }
 
             System.Console.WriteLine("Received");
@@ -124,7 +144,7 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                     {
                         if (!serialPort.IsOpen)
                         {
-                            serialPort.Open(); 
+                            serialPort.Open();
                         }
                     }
                 }).Start();
