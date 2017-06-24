@@ -55,7 +55,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
         }
 
-        // 打印矩阵
+        /// <summary>
+        /// 打印矩阵
+        /// </summary>
         public void PrintMatrix16()
         {
             System.Console.Write("=================\n");
@@ -95,6 +97,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             return false;
         }
 
+        /// <summary>
+        /// 将该点阵数据换为与之对应的另一设备上的点阵数据
+        /// </summary>
+        /// <returns>DotMatrix16</returns>
         public DotMatrix16 ExchangeCode()
         {
             DotMatrix16 newDotMatrix16 = new DotMatrix16();
@@ -112,6 +118,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             return newDotMatrix16;
         }
 
+        /// <summary>
+        /// 向上移动
+        /// </summary>
         public void UpMove()
         {
             byte byte0 = DotMatrix[0];
@@ -124,6 +133,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             DotMatrix[31] = byte1;
         }
 
+        /// <summary>
+        /// 向下移动
+        /// </summary>
         public void DownMove()
         {
             byte byte30 = DotMatrix[30];
@@ -136,6 +148,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             DotMatrix[1] = byte31;
         }
 
+        /// <summary>
+        /// 向左移动
+        /// </summary>
         public void LeftMove()
         {
             for (int i = 0; i < 32; i += 2)
@@ -147,6 +162,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
         }
 
+        /// <summary>
+        /// 向右移动
+        /// </summary>
         public void RightMove()
         {
             for (int i = 0; i < 32; i += 2)

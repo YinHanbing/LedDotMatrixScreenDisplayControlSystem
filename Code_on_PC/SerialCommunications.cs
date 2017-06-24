@@ -20,6 +20,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             this.cbBautRate = cbBautRate;
         }
 
+        /// <summary>
+        /// 发送数据
+        /// </summary>
+        /// <param name="data">DotMatrix16</param>
         public void SendData(DotMatrix16 data)
         {
             if (data != null && serialPort.IsOpen)
@@ -29,6 +33,10 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
         }
 
+        /// <summary>
+        /// 接收数据
+        /// </summary>
+        /// <returns>DotMatrix16</returns>
         public DotMatrix16 ReceiveData()
         {
             DotMatrix16 dotMatrix16 = new DotMatrix16();
@@ -65,6 +73,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             return dotMatrix16;
         }
 
+        /// <summary>
+        /// 扫描串口
+        /// </summary>
         public void ScanSerial()
         {
             cbSerial.SelectedIndex = 0;
@@ -127,6 +138,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
         }
 
+        /// <summary>
+        /// 开启串口
+        /// </summary>
         public void OpenSerial()
         {
             if (!serialPort.IsOpen && SerialPort.GetPortNames().Length != 0)
@@ -151,6 +165,9 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
             }
         }
 
+        /// <summary>
+        /// 关闭串口
+        /// </summary>
         public void CloseSerial()
         {
             if (serialPort.IsOpen)
