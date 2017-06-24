@@ -22,7 +22,9 @@ LedDotMatrixScreenDisplayControlSystem with MCU and PC
 2. Multi-character: Scroll display
 ### Graphic mode
 1. Draw dot
-2. Clearing dot
+2. Clear dot
+3. Drag draw dot
+4. Drag clear dot
 ### Monitoring mode
 1. Monitor dot matrix screen
 2. Real-time update
