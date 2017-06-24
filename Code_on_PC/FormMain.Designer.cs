@@ -173,6 +173,7 @@
             this.pbPicInput.TabIndex = 12;
             this.pbPicInput.TabStop = false;
             this.pbPicInput.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PbPicInput_MouseClick);
+            this.pbPicInput.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PbPicInput_MouseMove);
             // 
             // btnMonitor
             // 

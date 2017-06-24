@@ -51,7 +51,6 @@ namespace LedDotMatrixScreenDisplayControlSystemOnPC
                             dotMatrix16.DotMatrix[i + 1] = m_recvBytes[i];
                         }
                     }
-
                 }
                 catch (System.Exception)
                 {
