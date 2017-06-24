@@ -328,4 +328,3 @@
         private System.Windows.Forms.ToolTip toolTipSpeed;
     }
 }
-
